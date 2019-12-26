@@ -1,6 +1,6 @@
 export interface PokemonData {
   gifUrl: string;
-  zenkokuNo: number;
+  zenkokuNo: string;
   gararuNo: number;
   name: string;
   types: number[];
