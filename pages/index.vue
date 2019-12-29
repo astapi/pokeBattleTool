@@ -68,9 +68,6 @@ import { Component, Vue } from 'nuxt-property-decorator'
 import { PokemonData } from '../interface/pokemon'
 import MyParty from '@/components/myParty.vue'
 
-const pokeData = require('@/data/pokeData.json')
-const battleSelectPokemonNoList = require('@/data/battlePokemonNoList.json')
-
 interface SpeedData {
   icon: string
   name: string
@@ -86,27 +83,6 @@ interface SpeedData {
 })
 export default class Index extends Vue {
   mySelectPokemon: PokemonData[] = []
-
-  created() {
-    const noList = battleSelectPokemonNoList
-    const list: PokemonData[] = pokeData.data.filter((v: PokemonData) =>
-      noList.includes(v.zenkokuNo)
-    )
-    list.sort((a, b) => {
-      if (a.name > b.name) {
-        return 1
-      }
-      return -1
-    })
-    this.$store.commit('battle/setBattlePokemonDataList', list)
-  }
-
-  get pokemonDataList() {
-    const noList = battleSelectPokemonNoList
-    return pokeData.data.filter((v: PokemonData) =>
-      noList.includes(v.zenkokuNo)
-    )
-  }
 
   get myParty(): PokemonData[] {
     return this.$store.state.battle.myPokemonList
