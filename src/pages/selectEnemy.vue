@@ -51,13 +51,5 @@ export default class SelectEnemy extends Vue {
 <style lang="scss" scoped>
 .container {
   @apply p-20;
-
-  .able-button {
-    @apply bg-blue-500 text-white font-bold py-2 px-1 border border-blue-700 rounded;
-
-    &:hover {
-      @apply bg-blue-700;
-    }
-  }
 }
 </style>

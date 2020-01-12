@@ -1,5 +1,7 @@
 <template>
   <div class="container relative p-5">
+    <SideMenu></SideMenu>
+
     <section class="party flex justify-around w-full">
       <div class="my-party flex flex-col justify-center" style="width: 49%;">
         <MyParty
@@ -8,7 +10,7 @@
           @select="selectFromMyParty"
         />
         <div class="flex justify-center">
-          <nuxt-link to="selectTeam" class="mx-auto able-button">
+          <nuxt-link to="/party" class="mx-auto able-button">
             チーム選択へ
           </nuxt-link>
         </div>
@@ -51,34 +53,20 @@
         battle start
       </button>
     </div>
-
-    <div class="absolute" style="top: 10px; right: 0;">
-      <nuxt-link to="/database" class="able-button">
-        ポケモンデータベース
-      </nuxt-link>
-      <nuxt-link to="/party" class="able-button">
-        登録パーティ一覧
-      </nuxt-link>
-    </div>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
-import { PokemonData } from '../interface/pokemon'
+import { PokemonData, SpeedData } from '@/interface/pokemon'
+import SideMenu from '@/components/layouts/SideMenu.vue'
 import MyParty from '@/components/myParty.vue'
-
-interface SpeedData {
-  icon: string
-  name: string
-  status: number
-  correction: string
-}
 
 // https://storage.googleapis.com/poke-assets/pokemon/n876.gif
 @Component({
   components: {
-    MyParty
+    MyParty,
+    SideMenu,
   }
 })
 export default class Index extends Vue {
@@ -166,17 +154,6 @@ export default class Index extends Vue {
 <style lang="scss" scoped>
 .container {
   .my-party {
-  }
-
-  .able-button {
-    @apply bg-blue-500 text-white font-bold py-2 px-1 border border-blue-700 rounded;
-
-    &:hover {
-      @apply bg-blue-700;
-    }
-  }
-  .disable-button {
-    @apply bg-blue-500 text-white font-bold py-2 px-1 rounded opacity-50 cursor-not-allowed;
   }
 }
 </style>

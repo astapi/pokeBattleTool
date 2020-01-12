@@ -1,6 +1,11 @@
 <template>
   <div class="container relative p-5">
-    <section class="w-full">
+    <SideMenu></SideMenu>
+
+    <section>
+    </section>
+
+    <section class="w-full flex flex-col items-center">
       <section class="sumary-result flex">
         <table class="table-auto bg-white rounded shadow">
           <thead>
@@ -40,6 +45,7 @@
 import { Component, Vue } from 'nuxt-property-decorator'
 import { PokemonData } from '@/interface/pokemon'
 import { BattleLogData } from '@/interface/battoleLog'
+import SideMenu from '@/components/layouts/SideMenu.vue'
 import BattleLogParty from '@/components/battleLogParty.vue'
 import firebase from 'firebase/app'
 import 'firebase/firestore'
@@ -47,6 +53,7 @@ const pokeData = require('@/data/pokeData.json')
 
 @Component({
   components: {
+    SideMenu,
     BattleLogParty
   }
 })

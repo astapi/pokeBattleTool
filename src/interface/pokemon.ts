@@ -17,3 +17,10 @@ export interface Stats {
   SBlock: number;
   Speed: number;
 }
+
+export interface SpeedData {
+  icon: string
+  name: string
+  status: number
+  correction: string
+}
