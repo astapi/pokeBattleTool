@@ -3,22 +3,25 @@
     <SideMenu></SideMenu>
 
     <section class="party flex justify-around w-full">
-      <div class="my-party flex flex-col justify-center" style="width: 49%;">
-        <MyParty
-          v-if="myParty.length > 0"
-          :party-data="myParty"
-          @select="selectFromMyParty"
-        />
-        <div class="flex justify-center">
-          <nuxt-link to="/party" class="mx-auto able-button">
-            チーム選択へ
-          </nuxt-link>
+      <section class="my-party" style="width: 45%;">
+        <div class="bg-white shadow rounded flex flex-col justify-center mt-24">
+          <MyParty
+            v-if="myParty.length > 0"
+            :party-data="myParty"
+            @select="selectFromMyParty"
+          />
+          <div class="flex justify-center mt-5 mb-5">
+            <nuxt-link to="/party" class="mx-auto able-button">
+              チーム選択へ
+            </nuxt-link>
+          </div>
         </div>
-      </div>
+      </section>
+
       <div
         v-if="myParty.length > 0 && enemyParty.length > 0"
         class="flex justify-center"
-        style="width: 16%;"
+        style="width: 10%;"
       >
         <ul>
           <li
@@ -32,14 +35,17 @@
           </li>
         </ul>
       </div>
-      <div class="enemy-party flex flex-col justify-center" style="width: 49%;">
-        <MyParty v-if="enemyParty.length > 0" :party-data="enemyParty" />
-        <div class="flex justify-center">
-          <nuxt-link to="selectEnemy" class="mx-auto able-button">
-            相手ポケモン選択へ
-          </nuxt-link>
+
+      <section class="enemy-party" style="width: 45%;">
+        <div class="bg-white shadow flex flex-col justify-center mt-24">
+          <MyParty v-if="enemyParty.length > 0" :party-data="enemyParty" />
+          <div class="flex justify-center mt-5 mb-5">
+            <nuxt-link to="selectEnemy" class="mx-auto able-button">
+              相手ポケモン選択へ
+            </nuxt-link>
+          </div>
         </div>
-      </div>
+      </section>
     </section>
     <div class="mt-10 flex justify-center">
       <button

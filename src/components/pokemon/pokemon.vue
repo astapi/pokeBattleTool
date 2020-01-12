@@ -1,6 +1,6 @@
 <template>
   <div
-    class="pokemon border border-solid rounded bg-gray-100 p-1"
+    class="pokemon p-1"
     style="min-height: 0px;"
   >
     <div class="flex relative">
