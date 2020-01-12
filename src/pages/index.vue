@@ -56,8 +56,8 @@
       <nuxt-link to="/database" class="able-button">
         ポケモンデータベース
       </nuxt-link>
-      <nuxt-link to="/listParty" class="able-button">
-        パーティ登録
+      <nuxt-link to="/party" class="able-button">
+        登録パーティ一覧
       </nuxt-link>
     </div>
   </div>
