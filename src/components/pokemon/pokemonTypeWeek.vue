@@ -1,11 +1,11 @@
 <template>
   <div class="pokemon-type-week">
-    <p class="font-bold text-center">{{ weekMagnification }}</p>
-    <ul>
-      <li :key="typeNo" v-for="typeNo in typeNoList">
-        <PokemonType :type-no="typeNo" />
-      </li>
-    </ul>
+    <p class="font-bold text-sm">x{{ weekMagnification }}</p>
+    <div class="flex flex-wrap">
+      <div class="type-item" :key="typeName" v-for="typeName in typeNameList">
+        <PokemonType :type-name="typeName" />
+      </div>
+    </div>
   </div>
 </template>
 
@@ -13,6 +13,7 @@
 import { Component, Vue, Prop } from 'nuxt-property-decorator'
 import { TYPE_LIST } from '@/interface/pokemonType'
 import PokemonType from '@/components/pokemon/pokemonType.vue'
+import { Type } from '../../calc/data/types'
 
 @Component({
   components: {
@@ -21,7 +22,7 @@ import PokemonType from '@/components/pokemon/pokemonType.vue'
 })
 export default class PokemonTypeWeek extends Vue {
   @Prop() readonly weekMagnification!: string
-  @Prop() readonly typeNoList!: number[]
+  @Prop() readonly typeNameList!: Type[]
 
   get typeList() {
     return TYPE_LIST
@@ -31,5 +32,7 @@ export default class PokemonTypeWeek extends Vue {
 
 <style lang="scss" scoped>
 .pokemon-type-week {
+  .type-item {
+  }
 }
 </style>

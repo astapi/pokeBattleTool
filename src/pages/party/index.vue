@@ -1,20 +1,23 @@
 <template>
   <div>
-    <section class="p-10">
+    <section class="p-10 mt-10">
       <nuxt-link to="/party/edit" class="able-button">
-        パーティ登録
+        チーム登録
       </nuxt-link>
     </section>
     <section class="p-10">
-      <div v-if="partyList.length === 0">まだパーティがいません。登録してみましょう。</div>
-      <ul class="flex justify-start">
-        <li v-for="(party, index) of partyList" :key="index" class="mr-10">
-          <div>パーティ{{ index + 1 }}</div>
+      <div v-if="partyList.length === 0">まだチームがいません。登録してみましょう。</div>
+      <ul class="flex justify-start flex-wrap">
+        <li v-for="(party, index) of partyList" :key="index" class="mr-10 mb-10">
+          <div>
+            チーム{{ index + 1 }}
+            <span @click="deleteTeam(party.id)"><i class="fas fa-trash ml-3"></i></span>
+          </div>
           <div style="height: 500px;" class="flex flex-col justify-between">
-            <template v-for="pokemon of party">
+            <template v-for="pokemon of party.team">
               <PokemonImageAndName
                 :key="pokemon.name"
-                :image-url="storageUrl(pokemon.gifUrl)"
+                :image-url="pokemon.imageUrl"
                 :name="pokemon.name"
               />
             </template>
@@ -28,12 +31,15 @@
 
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
-import { PokemonData } from '@/interface/pokemon'
+import { PokemonData, PartyPokemon, PokemonFromDB, PartyFromDB } from '@/interface/pokemon'
 import PokemonImageAndName from '@/components/pokemon/pokemonImageAndName.vue'
 import firebase from 'firebase/app'
 import 'firebase/firestore'
+import { pokemonDataFromNameOrManagemendId } from '@/utils/common'
 
 const pokeData = require('@/data/pokeData.json')
+
+type Team = { team: PokemonData[], id: string };
 
 @Component({
    components: {
@@ -41,36 +47,46 @@ const pokeData = require('@/data/pokeData.json')
    }
 })
 export default class ListParty extends Vue {
-  partyList: PokemonData[][] = [];
+  partyList: Team[] = [];
 
-  created() {
+  async created() {
     this.$store.commit('setIsLoading', true)
-    firebase.firestore()
+    await this.fetchData();
+    this.$store.commit('setIsLoading', false)
+  }
+
+  async fetchData() {
+    const snap = await firebase.firestore()
       .collection('party')
       .where('userUid', '==', this.$store.state.loginUser.userUid)
       .orderBy('createdAt', 'asc')
       .get()
-      .then((snap) => {
-        if (snap.size === 0) return;
-        for (const doc of snap.docs) {
-          const data = doc.data()
-          const party = data.party.map((no: string) => {
-            return pokeData.data.find((p: PokemonData) => p.zenkokuNo === no)
-          })
-          this.partyList.push(party)
-        }
-        this.$store.commit('setIsLoading', false)
-      })
+    if (snap.size === 0) return;
+    for (const doc of snap.docs) {
+      const data = doc.data() as PartyFromDB
+      const party: PokemonData[] = [];
+      for (const pokemon of data.party) {
+        const pokemonData = await pokemonDataFromNameOrManagemendId( { name: pokemon.name, managementId: pokemon.managementId });
+        party.push(pokemonData);
+      }
+      this.partyList.push({ team: party, id: doc.id })
+    }
   }
 
-  baseUrl = 'https://storage.googleapis.com/poke-assets/pokemon/'
-  storageUrl(imageUrl: string): string {
-    return `${this.baseUrl}${imageUrl.split('icon96/')[1]}`
+  setPartyMoveBattle(team: Team): void {
+    this.$store.commit('battle/setMyPokemonList', team.team)
+    this.$router.push({ path: '/battle/selectBattleType' })
   }
 
-  setPartyMoveBattle(party: PokemonData[]): void {
-    this.$store.commit('battle/setMyPokemonList', party)
-    this.$router.push({ path: '/' })
+  async deleteTeam(id: string): Promise<void> {
+    this.partyList = [];
+    this.$store.commit('setIsLoading', true)
+    await firebase.firestore()
+      .collection('party')
+      .doc(id)
+      .delete()
+    await this.fetchData()
+    this.$store.commit('setIsLoading', false)
   }
 }
 </script>

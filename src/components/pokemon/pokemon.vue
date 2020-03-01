@@ -4,21 +4,21 @@
     style="min-height: 0px;"
   >
     <div class="flex relative">
-      <div>
+      <div class="w-3/12">
         <PokemonImageAndName
-          :image-url="storageUrl(pokemon.gifUrl)"
+          :image-url="pokemon.imageUrl"
           :item-no="1"
           :name="pokemon.name"
         />
         <div class="type-section flex flex-col justify-center">
           <template v-for="type of pokemon.types">
-            <PokemonType :type-no="type" :key="type" class="mt-2" />
+            <PokemonType :type-name="type" :key="type" />
           </template>
         </div>
       </div>
-      <div class="right-section">
+      <div class="right-section w-3/4">
         <div class="type-week-section">
-          <PokemonTypeWeekList :week-data="pokemon.weekType" />
+          <PokemonTypeWeekList :week-data="pokemon.typeAisho" />
         </div>
       </div>
       <div class="stats-popup absolute hidden">ほげほげ</div>
@@ -48,11 +48,6 @@ export default class Pokemon extends Vue {
 
   get itemImageUrl() {
     return ''
-  }
-
-  baseUrl = 'https://storage.googleapis.com/poke-assets/pokemon/'
-  storageUrl(imageUrl: string): string {
-    return `${this.baseUrl}${imageUrl.split('icon96/')[1]}`
   }
 }
 </script>

@@ -1,11 +1,24 @@
 <template>
-  <div class="p-5 flex flex-col justify-center" style="height: 50vh;">
-    <div class="flex justify-center">
+  <div class="p-5 flex flex-col justify-center">
+    <div class="font-bold text-2xl text-center">PokemonBattleTool</div>
+    <div class="flex justify-center mt-10">
       <button
-        @click="login"
-        class="bg-teal-100 font-bold py-2 px-1 border border-700 rounded w-20"
+        @click="loginOnTwitter"
+        class="shadow rounded font-bold py-2 px-1 border border-700 rounded p-5"
       >
-        login
+        twitterではじめる/ログイン
+      </button>
+    </div>
+    <section class="flex justify-start mt-10 lg:px-20 xl:px-20">
+      <v-help />
+    </section>
+
+    <div class="flex justify-center mt-10">
+      <button
+        @click="loginOnTwitter"
+        class="shadow rounded font-bold py-2 px-1 border border-700 rounded p-5"
+      >
+        twitterではじめる/ログイン
       </button>
     </div>
   </div>
@@ -15,10 +28,15 @@
 import { Component, Vue } from 'nuxt-property-decorator'
 import firebase from 'firebase/app'
 import 'firebase/auth'
+import VHelp from '@/components/VHelp.vue'
 
-// https://storage.googleapis.com/poke-assets/pokemon/n876.gif
-@Component({})
-export default class Login extends Vue {
+@Component({
+  layout: 'login',
+  components: {
+    VHelp
+  }
+})
+export default class Logout extends Vue {
   mounted() {
     this.$store.commit('setIsLoading', true)
     firebase
@@ -36,8 +54,9 @@ export default class Login extends Vue {
       })
   }
 
-  login() {
-    const provider = new firebase.auth.GoogleAuthProvider()
+  loginOnTwitter() {
+    this.$store.commit('setIsLoading', true)
+    const provider = new firebase.auth.TwitterAuthProvider()
     firebase.auth().languageCode = 'ja'
     firebase.auth().signInWithRedirect(provider)
   }

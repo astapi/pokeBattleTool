@@ -1,9 +1,9 @@
 <template>
   <div
-    class="pokemon-type-week-list flex flex-wrap justify-around mt-2 ml-1 w-32"
+    class="pokemon-type-week-list flex flex-wrap justify-start mt-2 ml-1"
   >
-    <div :key="key" v-for="(value, key) in weekData">
-      <PokemonTypeWeek :week-magnification="key" :type-no-list="value" />
+    <div class="week-row ml-2" :key="key" v-for="(value, key) in weekData">
+      <PokemonTypeWeek :week-magnification="key" :type-name-list="value" />
     </div>
   </div>
 </template>
@@ -41,5 +41,8 @@ export default class PokemonTypeWeekList extends Vue {
 
 <style lang="scss" scoped>
 .pokemon-type-week-list {
+  .week-row {
+    max-width: 50%;
+  }
 }
 </style>

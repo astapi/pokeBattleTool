@@ -1,6 +1,6 @@
 <template>
   <div :class="className">
-    {{ typeList[typeNo].name }}
+    {{ typeList[lowerCaseTypeName] }}
   </div>
 </template>
 
@@ -10,14 +10,19 @@ import { TYPE_LIST } from '@/interface/pokemonType'
 
 @Component({})
 export default class PokemonType extends Vue {
-  @Prop() readonly typeNo!: number
+  @Prop() readonly typeName!: string
 
   get typeList() {
     return TYPE_LIST
   }
 
+  get lowerCaseTypeName(): string {
+    return this.typeName.toLowerCase();
+  }
+
   get className() {
-    const className = this.typeList[this.typeNo].class
+    // const className = this.typeList[this.typeNo].class
+    const className = this.lowerCaseTypeName;
     return `pokemon-type border border-solid rounded font-bold text-xxs text-center ${className}`
   }
 }

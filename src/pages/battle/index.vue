@@ -2,53 +2,75 @@
   <div class="flex relative p-5">
     <section class="party flex mx-auto w-full">
       <section class="flex" style="width: 42%;">
-        <div class="my-party flex flex-col mr-5">
+        <div class="my-party flex flex-col mr-10" style="width: 30%;">
           <template v-for="pokemon of myParty">
             <PokemonImageAndName
               :key="pokemon.name"
-              :image-url="storageUrl(pokemon.gifUrl)"
+              :image-url="pokemon.imageUrl"
               :name="pokemon.name"
             />
           </template>
         </div>
-        <div class="my-select flex justify-center" style="width: 80%;">
-          <div class="flex flex-col">
-            <template v-for="pokemon of selectFromMyParty">
-              <Pokemon
-                :key="pokemon.name"
-                :pokemon="pokemon"
-                style="width: 260px"
-              />
-            </template>
-          </div>
-        </div>
+        <section class="my-select" style="width: 70%;">
+          <section class="bg-white shadow rounded p-5 flex justify-center">
+            <div class="flex flex-col">
+              <template v-for="pokemon of selectFromMyParty">
+                <Pokemon
+                  :key="pokemon.name"
+                  :pokemon="pokemon"
+                />
+              </template>
+            </div>
+          </section>
+        </section>
       </section>
-      <div class="flex justify-center" style="width: 16%;">
-        <ul>
-          <li
-            v-for="speedData of battolePokemonSpeedList"
-            :key="speedData.name + speedData.correction"
-            class="flex"
-          >
-            <div><img :src="speedData.icon" class="w-8" /></div>
-            <div>{{ speedData.status }}</div>
-            <div class="text-xs">{{ '(' + speedData.correction + ')' }}</div>
-          </li>
-        </ul>
-      </div>
-      <section class="flex" style="width: 42%;">
-        <div class="enemy-select flex justify-center" style="width: 80%;">
-          <div class="flex flex-col">
-            <template v-for="pokemon of selectFromEnemyParty">
-              <Pokemon
-                :key="pokemon.name"
-                :pokemon="pokemon"
-                style="width: 260px;"
-              />
-            </template>
-          </div>
+
+      <div style="width: 16%;">
+        <div class="ml-1">
+          <button class="able-button" @click="saveBattle('win')">勝ち</button>
+          <button class="able-button" @click="saveBattle('lose')">負け</button>
         </div>
-        <div class="enemy-party flex flex-col">
+        <div
+          v-if="battolePokemonSpeedList.length > 0"
+          class="flex flex-col-reverse items-center mt-2"
+        >
+          <template v-for="(baseStatsSpeedPokemonList, index) of battolePokemonSpeedList">
+            <div :key="index">
+              <div class="flex">
+                <div class="text-sm">{{ baseStatsSpeedPokemonList[0].baseStatsSpeed }}族</div>  
+                <div
+                  v-for="speedData of baseStatsSpeedPokemonList"
+                  :key="speedData.name"
+                  class="flex"
+                >
+                  <div><img :src="speedData.imageUrl" class="w-6" /></div>
+                </div>
+              </div>
+              <div>
+                <span class="text-xs">上方/無振/下降</span>
+                <br/>
+                <span class="text-xs">
+                  <span class="font-bold">{{ Math.floor(baseStatsSpeedPokemonList[0].baseSpeed * 1.1) }}</span>/{{ baseStatsSpeedPokemonList[0].baseSpeed }}/{{ Math.floor(baseStatsSpeedPokemonList[0].baseSpeed * 0.9) }}</span>
+              </div>
+            </div>
+          </template>
+        </div>
+      </div>
+
+      <section class="flex" style="width: 42%;">
+        <section class="enemy-select" style="width: 70%;">
+          <section class="bg-white shadow rounded p-5 flex justify-center">
+            <div class="flex flex-col">
+              <template v-for="pokemon of selectFromEnemyParty">
+                <Pokemon
+                  :key="pokemon.name"
+                  :pokemon="pokemon"
+                />
+              </template>
+            </div>
+          </section>
+        </section>
+        <div class="enemy-party flex flex-col ml-10" style="width: 30%;">
           <div
             v-for="pokemon of enemyParty"
             :key="pokemon.name"
@@ -56,45 +78,33 @@
             class="flex flex-wrap"
           >
             <PokemonImageAndName
-              :image-url="storageUrl(pokemon.gifUrl)"
+              :image-url="pokemon.imageUrl"
               :name="pokemon.name"
-              :id="`pokemon-${pokemon.gararuNo}`"
+              :id="`pokemon-${pokemon.name}`"
             />
           </div>
         </div>
       </section>
     </section>
-    <div>
-      <button @click="saveBattle('win')">勝ち</button>
-      <button @click="saveBattle('lose')">負け</button>
-    </div>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
-import firebase from 'firebase/app'
-import { PokemonData } from '@/interface/pokemon'
+import { PokemonData, SpeedData, PokemonFromDB } from '@/interface/pokemon'
 import PokemonImageAndName from '@/components/pokemon/pokemonImageAndName.vue'
 import Pokemon from '@/components/pokemon/pokemon.vue'
-
+import firebase from 'firebase/app'
 import 'firebase/firestore'
+import { changePokemonNameToOtherLang } from '../../utils/common'
 
-interface SpeedData {
-  icon: string
-  name: string
-  status: number
-  correction: string
-}
-
-// https://storage.googleapis.com/poke-assets/pokemon/n876.gif
 @Component({
   components: {
     PokemonImageAndName,
     Pokemon
   }
 })
-export default class Index extends Vue {
+export default class BattleIndex extends Vue {
   selectFromEnemyParty: PokemonData[] = []
 
   get myParty(): PokemonData[] {
@@ -113,35 +123,30 @@ export default class Index extends Vue {
     return [...this.myParty, ...this.enemyParty]
   }
 
-  get battolePokemonSpeedList(): SpeedData[] {
-    const ret: SpeedData[] = []
-    const baseUrl = 'https://storage.googleapis.com/poke-assets/pokemon/'
+  get battolePokemonSpeedList(): SpeedData[][] {
+    // const ret: SpeedData[] = []
+    const a: any = {};
     for (const pokemon of this.allBattlePokemon) {
-      for (const correction of Object.keys(pokemon.status)) {
-        const status = pokemon.status[correction]
-        if (correction === '最低' || correction === '下降') continue
-        ret.push({
-          icon: `${baseUrl}${pokemon.gifUrl.split('icon96/')[1]}`,
-          name: pokemon.name,
-          status: status.Speed ? status.Speed : 0,
-          correction
-        })
-        // スカーフ
-        // ret.push({
-        //   icon: `${baseUrl}${pokemon.gifUrl.split('icon96/')[1]}`,
-        //   name: pokemon.name,
-        //   status: status.Speed ? status.Speed * 2 : 0,
-        //   correction: correction + 'スカーフ'
-        // });
+      const baseStatsSpeed = pokemon.calcPokemon.species.bs.sp;
+      if (a[baseStatsSpeed]) {
+        const index = a[baseStatsSpeed].findIndex((p: PokemonData) => p.name === pokemon.name);
+        if (index === -1) a[baseStatsSpeed].push({ name: pokemon.name, imageUrl: pokemon.imageUrl, baseSpeed: pokemon.calcPokemon.rawStats.spe });
+      } else {
+        a[baseStatsSpeed] = [{ name: pokemon.name, imageUrl: pokemon.imageUrl, baseSpeed: pokemon.calcPokemon.rawStats.spe }];
       }
     }
-    ret.sort((a, b) => b.status - a.status)
+    const ret: SpeedData[][] = [];
+    for (const baseStatsSpeed of Object.keys(a)) {
+      ret.push(a[baseStatsSpeed].map((speedData: any) => {
+        return { ...speedData, baseStatsSpeed };
+      }));
+    }
     return ret
   }
 
   selectEnemy(pokemon: PokemonData) {
     if (process.client) {
-      const dom = document.querySelector(`#pokemon-${pokemon.gararuNo}`)
+      const dom = document.querySelector(`#pokemon-${pokemon.name}`)
       if (!dom) return
       const ret = dom.classList.toggle('selected')
       if (ret) {
@@ -155,25 +160,31 @@ export default class Index extends Vue {
     }
   }
 
-  baseUrl = 'https://storage.googleapis.com/poke-assets/pokemon/'
-  storageUrl(imageUrl: string): string {
-    return `${this.baseUrl}${imageUrl.split('icon96/')[1]}`
-  }
-
   saveBattle(type: string) {
     firebase
       .firestore()
       .collection('battleLog')
       .add({
-        myParty: this.myParty.map((p) => p.zenkokuNo),
-        enemyParty: this.enemyParty.map((p) => p.zenkokuNo),
-        selectFromMyParty: this.selectFromMyParty.map((p) => p.zenkokuNo),
-        selectFromEnemyParty: this.selectFromEnemyParty.map((p) => p.zenkokuNo),
+        myParty: this.myParty.map((p) => this.pokemonDataFromPokemonFromDB(p)),
+        enemyParty: this.enemyParty.map((p) => this.pokemonDataFromPokemonFromDB(p)),
+        selectFromMyParty: this.selectFromMyParty.map((p) => this.pokemonDataFromPokemonFromDB(p)),
+        selectFromEnemyParty: this.selectFromEnemyParty.map((p) => this.pokemonDataFromPokemonFromDB(p)),
         result: type,
+        battleType: this.$store.state.battle.battleType,
         userUid: this.$store.state.loginUser.userUid,
         createdAt: firebase.firestore.FieldValue.serverTimestamp(),
         updatedAt: firebase.firestore.FieldValue.serverTimestamp()
       })
+    this.$router.push('/battle/entry');
+  }
+
+  pokemonDataFromPokemonFromDB(pokemon: PokemonData): PokemonFromDB {
+    const ret: PokemonFromDB = { name: changePokemonNameToOtherLang(pokemon.name), isManagement: false }
+    if (pokemon.isManagement) {
+      ret.isManagement = true
+      ret.managementId = pokemon.managementId
+    }
+    return ret;
   }
 }
 </script>

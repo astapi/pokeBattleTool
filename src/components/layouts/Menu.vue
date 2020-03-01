@@ -55,7 +55,7 @@ export default {
     width: {
       type: [String],
       required: false,
-      default: '300'
+      default: '200'
     },
     disableEsc: {
       type: Boolean,

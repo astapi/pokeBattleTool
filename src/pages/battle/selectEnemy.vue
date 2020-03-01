@@ -43,7 +43,7 @@ export default class SelectEnemy extends Vue {
 
   endSelect() {
     this.$store.commit('battle/setEnemyPokemonList', this.enemyParty)
-    this.$router.push({ path: '/' })
+    this.$router.push({ path: '/battle/entry' })
   }
 }
 </script>

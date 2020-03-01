@@ -3,7 +3,7 @@
     <template v-for="pokemon of log[partyColumnName]">
       <PokemonImage
         :key="pokemon.name"
-        :pokemon-image-url="storageUrl(pokemon.gifUrl)"
+        :pokemon-image-url="pokemon.imageUrl"
         class="pokemon-image w-12"
         :class="pokemonImageClass(log, pokemon, selectFromPartyColumnName)"
       /> 
@@ -13,9 +13,10 @@
 
 <script lang="ts">
 import { Component, Vue, Prop } from 'nuxt-property-decorator'
-import { PokemonData } from '@/interface/pokemon'
+import { PokemonData, PokemonFromDB } from '@/interface/pokemon'
 import { BattleLogData } from '@/interface/battoleLog'
 import PokemonImage from '@/components/pokemon/pokemonImage.vue'
+import { changePokemonNameToOtherLang } from '../utils/common'
 
 @Component({
   components: {
@@ -37,16 +38,11 @@ export default class battleLogParty extends Vue {
   }
 
   pokemonImageClass(log: BattleLogData, pokemon: PokemonData, type: 'selectFromMyParty'|'selectFromEnemyParty'): string {
-    let classString = log[type].includes(pokemon.zenkokuNo) ? 'select' : '';
+    let classString = log[type].find((p) => p.name === changePokemonNameToOtherLang(pokemon.name)) ? 'select' : '';
     if (classString !== '') {
-      classString = classString + ' ' + 'selectNo' + (log[type].findIndex((no: string) => no === pokemon.zenkokuNo) + 1).toString()
+      classString = classString + ' ' + 'selectNo' + (log[type].findIndex((p) => p.name === changePokemonNameToOtherLang(pokemon.name)) + 1).toString()
     }
     return classString;
-  }
-
-  baseUrl = 'https://storage.googleapis.com/poke-assets/pokemon/'
-  storageUrl(imageUrl: string): string {
-    return `${this.baseUrl}${imageUrl.split('icon96/')[1]}`
   }
 }
 </script>
@@ -99,6 +95,21 @@ export default class battleLogParty extends Vue {
         line-height: 25px;
         text-align: center;
        	background-color: #b2f5ea;
+        border-radius: 50%;
+        color: #1a202c;
+      }
+    }
+    &.selectNo4 {
+      &:after {
+        content: '4';
+        position: absolute;
+        bottom: -8px;
+        right: -13px;
+        width: 25px;
+        height: 25px;
+        line-height: 25px;
+        text-align: center;
+        background-color: #b2f5ea;
         border-radius: 50%;
         color: #1a202c;
       }

@@ -15,7 +15,20 @@ module.exports = {
         content: process.env.npm_package_description || ''
       }
     ],
-    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
+    link: [
+      {
+        rel: 'preload',
+        href: 'https://kit.fontawesome.com/30869cfbe3.js',
+        crossorigin: 'anonymous',
+        as: 'script'
+      }
+    ],
+    script: [
+      {
+        src: 'https://kit.fontawesome.com/30869cfbe3.js',
+        crossorigin: 'anonymous'
+      }
+    ]
   },
   /*
    ** Customize the progress-bar color
@@ -42,7 +55,8 @@ module.exports = {
     '@nuxtjs/stylelint-module',
     // Doc: https://github.com/nuxt-community/nuxt-tailwindcss
     '@nuxtjs/tailwindcss',
-    '@nuxt/typescript-build'
+    '@nuxt/typescript-build',
+    '@nuxtjs/vuetify'
   ],
   /*
    ** Nuxt.js modules

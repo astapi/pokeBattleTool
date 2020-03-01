@@ -5216,6 +5216,13 @@ const XY: {[name: string]: Species} = extend(true, {}, BW, {
   Whimsicott: {t2: 'Fairy'},
   Whirlipede: {ab: 'Speed Boost'},
   Wigglytuff: {t2: 'Fairy', bs: {sa: 85}, ab: 'Competitive'},
+  'Aegislash': {
+    t1: 'Steel',
+    t2: 'Ghost',
+    bs: {hp: 60, at: 50, df: 150, sa: 50, sd: 150, sp: 60},
+    w: 52,
+    ab: 'Stance Change',
+  },
   'Aegislash-Blade': {
     t1: 'Steel',
     t2: 'Ghost',

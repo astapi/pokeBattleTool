@@ -1,8 +1,18 @@
 <template>
-  <div class="container mx-auto relative">
-    <section class="attacker-defender-setting-section flex flex-wrap">
-      <section class="attacker border border-solid w-full p-4 lg:w-1/2 xl:w-1/2 m-2 shadow rounded">
-        <SettingPokemonFrom :setNatures="true" :set-evs="true" @set-name="setNameAttacker" @set-move="setMoveAttacker" @set-item="setItemAttacker"/>
+  <div class="container">
+    <section class="attacker-defender-setting-section flex justify-center">
+      <section class="attacker bg-white border border-solid w-full p-4 lg:w-1/3 xl:w-1/3 m-2 shadow rounded">
+        <SettingPokemonFrom
+          :setNatures="true"
+          :set-evs="true"
+          :set-ivs="true"
+          :name="name"
+          :valid-name="validName"
+          @input-name="inputNameAttacker"
+          @input-natures="inputNaturesAttacker"
+          @input-move="inputMoveAttacker"
+          @input-item="inputItemAttacker"
+         />
         <div class="flex justify-center">
           <button class="able-button" @click="save">save</button>
         </div>
@@ -16,45 +26,50 @@ import { Component, Vue, Watch } from 'nuxt-property-decorator'
 import { PokemonData } from '@/interface/pokemon'
 import SettingPokemonFrom from '@/components/settingPokemonForm.vue'
 import * as calc from '@/calc/index'
+import firebase from 'firebase/app'
+import 'firebase/firestore'
+
+interface PokemonEditData {
+  name: string;
+  moves: string[];
+  item: string;
+  natures: string;
+  evs: Partial<calc.StatsTable<number>>;
+  ivs: Partial<calc.StatsTable<number>>;
+}
 
 @Component({
   components: {
     SettingPokemonFrom
   }
 })
-export default class DamageCalcurator extends Vue {
+export default class EditPokemon extends Vue {
   pokemonData: PokemonData[] = require('@/data/pokeData.json').data;
-  pokemonEnNameMap: any = require('@/data/pokemonNameEnMap.json');
-  pokemonItemNameMap: {[index: string]: string} = require('@/data/itemNameLanguageMap.json');
-  name: string = '';
-  nameEn: string = '';
-  move: string[] = [];
-  moveEn: string[] = [];
-  item: string = '';
-  itemEn: string = '';
-  evs: Partial<calc.StatsTable<number>> = {};
+
+  pokemonEditData: PokemonEditData = {
+    name: '',
+    moves: [],
+    item: '',
+    natures: '',
+    evs: {},
+    ivs: {},
+  }
+  validName: boolean = true;
   calcPokemon: calc.Pokemon|undefined;
   calcMove: calc.Move|undefined;
 
-  setNameAttacker(data: any) {
-    this.name = data.name;
-    this.nameEn = data.nameEn;
-    this.pokemonData = data.pokemonData;
-    this.createAttacker();
+  inputNameAttacker(name: string) {
+    this.pokemonEditData.name = name
   }
-  setMoveAttacker(data: any) {
-    this.move = data.move;
-    this.moveEn = data.moveEn;
-    if (!this.calcPokemon) return;
-    this.calcMove = new calc.Move(8, this.moveEn, {
-      ability: this.calcPokemon.ability,
-    });
+  inputMoveAttacker(moves: string[]) {
+    this.pokemonEditData.moves = moves;
   }
-  setItemAttacker(data: any) {
-    this.item = data.item;
-    this.itemEn = data.itemEn;
-    console.log(data);
-    this.createAttacker();
+  inputItemAttacker(item: string) {
+    this.pokemonEditData.item = item;
+    // this.createAttacker();
+  }
+  inputNaturesAttacker(natures: string) {
+    this.pokemonEditData.natures = natures;
   }
 
   createAttacker() {
@@ -65,18 +80,24 @@ export default class DamageCalcurator extends Vue {
         spa: 252,
       },
     };
-    if (this.itemEn !== '') {
+    // if (this.itemEn !== '') {
       console.log('itemset');
-      params.item = this.itemEn;
-    }
+      // params.item = this.itemEn;
+    // }
     console.log(params);
-    const attacker = new calc.Pokemon(8, this.nameEn, params);
-    this.calcPokemon = attacker;
+    // const attacker = new calc.Pokemon(8, this.nameEn, params);
+    // this.calcPokemon = attacker;
   }
 
-  save() {
+  async save() {
+    if (this.pokemonEditData.name === '') {
+      // TODO 名前は必須
+      this.validName = false;
+      return;
+    }
+    this.$store.commit('setIsLoading', true)
     console.log('save');
-    if (!this.nameEn) return;
+    // if (!this.nameEn) return;
     const params: any = {
       level: 50,
       evs: {
@@ -84,14 +105,20 @@ export default class DamageCalcurator extends Vue {
         spa: 252,
       },
     };
-    if (this.itemEn !== '') {
+    // if (this.itemEn !== '') {
       console.log('itemset');
-      params.item = this.itemEn;
-    }
-    console.log(params);
-    const attacker = new calc.Pokemon(8, this.nameEn, params);
-    this.calcPokemon = attacker;
-
+      // params.item = this.itemEn;
+    // }
+    // console.log(params);
+    // const attacker = new calc.Pokemon(8, this.nameEn, params);
+    // this.calcPokemon = attacker;
+    await firebase.firestore().collection('pokemonManagementData').add({
+      pokemonEditData: this.pokemonEditData,
+      userUid: this.$store.state.loginUser.userUid,
+      createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+      updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+    });
+    this.$store.commit('setIsLoading', false)
     console.log('save done.');
   }
 }

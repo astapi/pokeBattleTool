@@ -1,12 +1,38 @@
+import * as calc from '@/calc/index'
+import { Type } from '~/calc/data/types';
+
 export interface PokemonData {
-  gifUrl: string;
-  zenkokuNo: string;
-  gararuNo: number;
+  // gifUrl: string;
+  // zenkokuNo: string;
+  // gararuNo: number;
   name: string;
-  types: number[];
-  weekType: {[type: string]:number[]};
-  baseStats: Stats;
-  status: {[key: string]: Stats};
+  calcPokemon: calc.Pokemon;
+  types: Type[];
+  typeAisho: any;
+  imageUrl: string;
+  isManagement: boolean;
+  managementId?: string;
+  // nameEn?: string;
+  // types: number[];
+  // weekType: {[type: string]:number[]};
+  // baseStats: Stats;
+  // status: {[key: string]: Stats};
+}
+
+export interface PokemonManagementData {
+  name: string;
+  moves?: string[];
+  item?: string;
+  natures?: string;
+  evs?: Partial<calc.StatsTable<number>>;
+  ivs?: Partial<calc.StatsTable<number>>;
+}
+
+export interface PartyPokemon {
+  name: string;
+  zenkokuNo: string;
+  isManagement?: boolean;
+  pokemonManagementId?: string; 
 }
 
 export interface Stats {
@@ -19,8 +45,20 @@ export interface Stats {
 }
 
 export interface SpeedData {
-  icon: string
-  name: string
-  status: number
-  correction: string
+  name: string;
+  imageUrl: string;
+  baseSpeed: number;
+  baseStatsSpeed: number;
+}
+
+// DB
+export interface PokemonFromDB {
+  name: string;
+  isManagement?: boolean;
+  managementId?: string;
+}
+
+export interface PartyFromDB {
+  userUid: string;
+  party: PokemonFromDB[],
 }

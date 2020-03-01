@@ -12,7 +12,7 @@
       </div>
       <PokemonList
         @select="select"
-        :pokemon-list="list"
+        :pokemon-list="pokemonList"
         class="flex flex-wrap justify-around"
       />
     </div>
@@ -38,10 +38,6 @@ export default class SearchFromPokemonList extends Vue {
 
   get debounceSearch() {
     return debounce(this.search, 200)
-  }
-
-  mounted() {
-    this.list = this.pokemonList
   }
 
   search(event: any): void {

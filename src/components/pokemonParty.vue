@@ -2,10 +2,11 @@
   <div class="pokemon-party flex flex-wrap justify-around">
     <div
       @click="select(pokemon)"
-      :key="pokemon.name"
       v-for="pokemon of partyData"
+      :key="pokemon.name"
+      class="w-2/4"
     >
-      <Pokemon :id="`pokemon-${pokemon.gararuNo}`" :pokemon="pokemon" />
+      <Pokemon :id="`pokemon-${pokemon.name}`" :pokemon="pokemon" />
     </div>
   </div>
 </template>
@@ -25,7 +26,7 @@ export default class PokemonParty extends Vue {
 
   select(pokemon: PokemonData) {
     if (process.client) {
-      const dom = document.querySelector(`#pokemon-${pokemon.gararuNo}`)
+      const dom = document.querySelector(`#pokemon-${pokemon.name}`)
       if (!dom) return
       dom.classList.toggle('selected')
       this.$emit('select', pokemon)

@@ -7,9 +7,9 @@
       class="mb-3 cursor-pointer w-24"
     >
       <PokemonImageAndName
-        :image-url="storageUrl(pokemon.gifUrl)"
+        :image-url="pokemon.imageUrl"
         :name="pokemon.name"
-        :id="`select-box-pokemon-${pokemon.gararuNo}`"
+        :id="`select-box-pokemon-${pokemon.name}`"
       />
     </div>
   </div>
@@ -28,15 +28,10 @@ import PokemonImageAndName from '@/components/pokemon/pokemonImageAndName.vue'
 export default class PokemonList extends Vue {
   @Prop() readonly pokemonList!: PokemonData[]
 
-  baseUrl = 'https://storage.googleapis.com/poke-assets/pokemon/'
-  storageUrl(imageUrl: string): string {
-    return `${this.baseUrl}${imageUrl.split('icon96/')[1]}`
-  }
-
   select(pokemon: PokemonData) {
     if (process.client) {
       const dom = document.querySelector(
-        `#select-box-pokemon-${pokemon.gararuNo}`
+        `#select-box-pokemon-${pokemon.name}`
       )
       if (!dom) return
       dom.classList.toggle('selected')

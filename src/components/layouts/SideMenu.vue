@@ -21,7 +21,12 @@
           データベース
         </nuxt-link>
       </div>
-      <div>ダメージ計算</div>
+      <div>
+        <nuxt-link to="/contact">要望・問い合わせ</nuxt-link>
+      </div>
+      <div>
+        <nuxt-link to="/logout">ログアウト</nuxt-link>
+      </div>
     </SlideMenu>
   </div>
 </template>
@@ -43,5 +48,6 @@ export default {
 
 .side-menu a {
   cursor: pointer;
+  @apply text-base;
 }
 </style>

@@ -1,10 +1,20 @@
-import { PokemonData } from '../interface/pokemon';
+import { PokemonData } from '@/interface/pokemon';
+import { BattleType } from '~/interface/battoleLog';
+
+// interface BattleState {
+//   enemyPokemonList: PokemonData[];
+//   myPokemonList: PokemonData[];
+//   selectBattlePokemonFromTeam: PokemonData[];
+//   battlePokemonDataList: PokemonData[];
+//   battleType: BattleType;
+// }
 
 export const state = () => ({
   enemyPokemonList: [],
   myPokemonList: [],
   selectedBattlePokemonFromTeam: [],
-  battlePokemonDataList: []
+  battlePokemonDataList: [],
+  battleType: null,
 })
 
 export const mutations = {
@@ -19,5 +29,8 @@ export const mutations = {
   },
   setBattlePokemonDataList(state: any, list: PokemonData[]) {
     state.battlePokemonDataList = list;
+  },
+  setBattleType(state: any, payload: BattleType) {
+    state.battleType = payload;
   }
 }
