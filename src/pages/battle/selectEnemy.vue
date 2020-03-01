@@ -17,7 +17,7 @@
 
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
-import { PokemonData } from '../interface/pokemon'
+import { PokemonData } from '@/interface/pokemon'
 import SearchFromPokemonList from '@/components/searchFromPokemonList.vue'
 
 @Component({

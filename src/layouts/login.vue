@@ -18,7 +18,12 @@
 
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
-@Component({})
+import { VueLoading } from 'vue-loading-template'
+@Component({
+  components: {
+    VueLoading
+  }
+})
 export default class LoginLayout extends Vue {}
 </script>
 

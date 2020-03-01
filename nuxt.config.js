@@ -1,3 +1,4 @@
+require('dotenv').config()
 module.exports = {
   mode: 'spa',
   srcDir: 'src/',
@@ -56,6 +57,7 @@ module.exports = {
     // Doc: https://github.com/nuxt-community/nuxt-tailwindcss
     '@nuxtjs/tailwindcss',
     '@nuxt/typescript-build',
+    '@nuxtjs/dotenv',
     '@nuxtjs/vuetify'
   ],
   /*
@@ -70,5 +72,16 @@ module.exports = {
      ** You can extend webpack config here
      */
     // extend(config, ctx) {}
+  },
+
+  env: {
+    FIREBASE_APIKEY: process.env.FIREBASE_APIKEY,
+    FIREBASE_AUTHDOMAIN: process.env.FIREBASE_AUTHDOMAIN,
+    FIREBASE_DATABASEURL: process.env.FIREBASE_DATABASEURL,
+    FIREBASE_PROJECTID: process.env.FIREBASE_PROJECTID,
+    FIREBASE_STORAGEBUCKET: process.env.FIREBASE_STORAGEBUCKET,
+    FIREBASE_MESSAGING_SENDER_ID: process.env.FIREBASE_MESSAGING_SENDER_ID,
+    FIREBASE_APPID: process.env.FIREBASE_APPID,
+    FIREBASE_MESUREMENTID: process.env.FIREBASE_MESUREMENTID
   }
 }
