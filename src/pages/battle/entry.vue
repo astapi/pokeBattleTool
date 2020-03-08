@@ -1,25 +1,54 @@
 <template>
-  <div class="container relative p-5">
-    <section class="party flex justify-around w-full">
-      <section class="my-party" style="width: 45%;">
-        <div class="bg-white shadow rounded flex flex-col justify-center mt-10">
+  <div class="container relative">
+    <section @click="showHelp" class="absolute" style="top: 10px; right: 10px;">
+      <span><i class="far fa-question-circle text-2xl"></i></span>
+    </section>
+
+    <section @click="hiddenHelp" v-if="visibleHelp" class="overlay fixed top-0 left-0 z-10 opacity-50 w-screen h-screen bg-gray-500">
+    </section>
+
+    <div v-if="visibleHelp" class="help fixed left-0 flex justify-center z-20 p-5 w-full" style="top: 60px">
+      <div @click="hiddenHelp" class="flex justify-center p-5 relative bg-white shadow border rounded">
+        <div class="absolute bg-white rounded-full z-30" style="top: -10px; right: -10px">
+          <span><i class="far fa-times-circle text-3xl"></i></span>
+        </div>
+        <ul class="font-bold">
+          <li>1. 対戦相手のポケモンを設定する</li>
+          <li>2. 自分が選出するポケモンをタップする</li>
+          <li>3. 開始ボタンを押してね</li>
+        </ul>
+      </div>
+    </div>
+
+    <section class="party mt-24 lg:mt-0 w-full relative block lg:flex lg:justify-around">
+      <div class="absolute right-0 flex justify-center mt-5 mb-5" style="top: -70px;">
+         <nuxt-link to="/party" class="mx-auto able-button">
+           チーム選択へ
+         </nuxt-link>
+      </div>
+
+      <section class="my-party lg:w-2/5">
+        <div class="bg-white shadow rounded flex flex-col justify-center">
           <MyParty
             v-if="myParty.length > 0"
             :party-data="myParty"
             @select="selectFromMyParty"
           />
-          <div class="flex justify-center mt-5 mb-5">
-            <nuxt-link to="/party" class="mx-auto able-button">
-              チーム選択へ
-            </nuxt-link>
-          </div>
         </div>
       </section>
 
+      <div class="mt-5 flex justify-center block lg:hidden">
+        <button
+          @click="startBattle"
+          :class="battleReady ? 'able-button' : 'disable-button'"
+        >
+          開始
+        </button>
+      </div>
+
       <div
         v-if="myParty.length > 0 && enemyParty.length > 0"
-        class="flex flex-col-reverse justify-center"
-        style="width: 15%;"
+        class="hidden lg:flex lg:flex-col-reverse lg:justify-center lg:w-1/6"
       >
         <template v-for="(baseStatsSpeedPokemonList, index) of battolePokemonSpeedList">
           <div :key="index">
@@ -42,8 +71,8 @@
         </template>
       </div>
 
-      <section class="enemy-party" style="width: 45%;">
-        <div class="bg-white shadow flex flex-col justify-center mt-10">
+      <section class="enemy-party lg:w-2/5 mt-5 lg:mt-10">
+        <div class="bg-white shadow flex flex-col justify-center">
           <MyParty v-if="enemyParty.length > 0" :party-data="enemyParty" />
           <div class="flex justify-center mt-5 mb-5">
             <nuxt-link to="selectEnemy" class="mx-auto able-button">
@@ -53,16 +82,14 @@
         </div>
       </section>
     </section>
-    <div class="mt-10 flex justify-center">
+    <div class="mt-10 hidden lg:flex justify-center">
       <button
         v-if="battleReady"
         @click="startBattle"
-        class="mx-auto able-button"
+        class="mx-auto"
+        :class="battleReady ? 'able-button' : 'disable-button'"
       >
-        battle start
-      </button>
-      <button v-else class="mx-auto disable-button">
-        battle start
+        開始
       </button>
     </div>
   </div>
@@ -83,6 +110,7 @@ import { BattleType } from '@/interface/battoleLog'
 })
 export default class BattleEntry extends Vue {
   mySelectPokemon: PokemonData[] = []
+  visibleHelp: boolean = false
 
   get myParty(): PokemonData[] {
     return this.$store.state.battle.myPokemonList
@@ -165,6 +193,13 @@ export default class BattleEntry extends Vue {
       this.mySelectPokemon
     )
     this.$router.push({ path: '/battle' })
+  }
+
+  showHelp() {
+    this.visibleHelp = true;
+  }
+  hiddenHelp() {
+    this.visibleHelp = false;
   }
 }
 </script>

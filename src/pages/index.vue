@@ -1,6 +1,8 @@
 <template>
   <div class="container min-h-screen p-5">
-    <section class="wrap flex flex-wrap mt-20 px-20 items-center justify-between">
+    <section
+      class="wrap flex flex-wrap mt-20 px-20 items-center justify-between"
+    >
       <div class="item md:w-2/5 lg:w-2/5">
         <nuxt-link class="font-bold" to="/party">対戦を開始する</nuxt-link>
       </div>
@@ -10,7 +12,7 @@
     </section>
 
     <section class="flex justify-start mt-10 lg:px-10 xl:px-10">
-      <v-help />
+      <v-help class="shadow bg-gray-100" />
     </section>
   </div>
 </template>
@@ -26,8 +28,7 @@ import VHelp from '@/components/VHelp.vue'
     VHelp
   }
 })
-export default class Index extends Vue {
-}
+export default class Index extends Vue {}
 </script>
 
 <style lang="scss" scoped>

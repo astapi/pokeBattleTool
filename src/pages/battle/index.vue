@@ -1,8 +1,8 @@
 <template>
-  <div class="flex relative p-5">
-    <section class="party flex mx-auto w-full">
-      <section class="flex" style="width: 42%;">
-        <div class="my-party flex flex-col mr-10" style="width: 30%;">
+  <div class="lg:flex relative p-5">
+    <section class="party mt-12 lg:mt-0 lg:flex mx-auto w-full">
+      <section class="lg:flex lg:w-2/5">
+        <div class="my-party flex lg:flex-col lg:mr-10 lg:w-2/6">
           <template v-for="pokemon of myParty">
             <PokemonImageAndName
               :key="pokemon.name"
@@ -11,7 +11,7 @@
             />
           </template>
         </div>
-        <section class="my-select" style="width: 70%;">
+        <section class="my-select lg:w-4/6">
           <section class="bg-white shadow rounded p-5 flex justify-center">
             <div class="flex flex-col">
               <template v-for="pokemon of selectFromMyParty">
@@ -25,7 +25,12 @@
         </section>
       </section>
 
-      <div style="width: 16%;">
+      <div class="flex justify-around mt-5 lg:mt-0 lg:block lg:ml-1">
+        <button class="able-button" @click="saveBattle('win')">勝ち</button>
+        <button class="able-button" @click="saveBattle('lose')">負け</button>
+      </div>
+
+      <div class="hidden lg:block" style="width: 16%;">
         <div class="ml-1">
           <button class="able-button" @click="saveBattle('win')">勝ち</button>
           <button class="able-button" @click="saveBattle('lose')">負け</button>
@@ -57,8 +62,8 @@
         </div>
       </div>
 
-      <section class="flex" style="width: 42%;">
-        <section class="enemy-select" style="width: 70%;">
+      <section class="mt-5 lg:mt-0 lg:flex lg:w-2/5">
+        <section class="enemy-select lg:w-4/6">
           <section class="bg-white shadow rounded p-5 flex justify-center">
             <div class="flex flex-col">
               <template v-for="pokemon of selectFromEnemyParty">
@@ -70,7 +75,7 @@
             </div>
           </section>
         </section>
-        <div class="enemy-party flex flex-col ml-10" style="width: 30%;">
+        <div class="enemy-party flex lg:flex-col lg:w-2/6 lg:ml-10">
           <div
             v-for="pokemon of enemyParty"
             :key="pokemon.name"

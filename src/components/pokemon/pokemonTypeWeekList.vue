@@ -41,8 +41,5 @@ export default class PokemonTypeWeekList extends Vue {
 
 <style lang="scss" scoped>
 .pokemon-type-week-list {
-  .week-row {
-    max-width: 50%;
-  }
 }
 </style>

@@ -1,15 +1,16 @@
 <template>
-  <div class="container">
+  <div class="container mt-20 lg:mt-0 lg:p-20">
     <div class="mb-10 flex justify-center">
       <button @click="endSelect" class="able-button">
         相手のポケモン設定完了！
       </button>
     </div>
-    <div class="search-list w-full mt-3 pl-5 border-solid">
+    <div class="search-list w-full mt-3 lg:pl-5 border-solid">
       <SearchFromPokemonList
         @select="selectEnemy"
         :pokemon-list="pokemonDataList"
         class="flex flex-wrap justify-around"
+        :max-select="6"
       />
     </div>
   </div>
@@ -35,6 +36,7 @@ export default class SelectEnemy extends Vue {
   selectEnemy(pokemon: PokemonData) {
     const index = this.enemyParty.findIndex((p) => pokemon.name === p.name)
     if (index === -1) {
+      if (this.enemyParty.length === 6) return;
       this.enemyParty.push(pokemon)
       return
     }
@@ -50,6 +52,5 @@ export default class SelectEnemy extends Vue {
 
 <style lang="scss" scoped>
 .container {
-  @apply p-20;
 }
 </style>

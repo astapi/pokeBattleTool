@@ -9,7 +9,7 @@
       <PokemonImageAndName
         :image-url="pokemon.imageUrl"
         :name="pokemon.name"
-        :id="`select-box-pokemon-${pokemon.name}`"
+        :class="selectPokemonNameList.includes(pokemon.name) ? `relative selected selectNo${index(pokemon.name)}` : ''"
       />
     </div>
   </div>
@@ -27,16 +27,22 @@ import PokemonImageAndName from '@/components/pokemon/pokemonImageAndName.vue'
 })
 export default class PokemonList extends Vue {
   @Prop() readonly pokemonList!: PokemonData[]
+  @Prop() maxSelect!: number;
+  selectPokemonNameList: string[] = []
 
   select(pokemon: PokemonData) {
-    if (process.client) {
-      const dom = document.querySelector(
-        `#select-box-pokemon-${pokemon.name}`
-      )
-      if (!dom) return
-      dom.classList.toggle('selected')
-      this.$emit('select', pokemon)
+    this.$emit('select', pokemon)
+    const index = this.selectPokemonNameList.findIndex((name) => pokemon.name === name)
+    if (index === -1) {
+      if (this.selectPokemonNameList.length === this.maxSelect) return;
+      this.selectPokemonNameList.push(pokemon.name)
+      return
     }
+    this.selectPokemonNameList.splice(index, 1)
+  }
+
+  index(name: string) {
+    return this.selectPokemonNameList.findIndex((n) => n === name) + 1;
   }
 }
 </script>
@@ -45,6 +51,97 @@ export default class PokemonList extends Vue {
 .pokemon-list {
   .selected {
     @apply bg-yellow-200;
+  }
+  .selectNo1 {
+    &:after {
+      content: '1';
+      position: absolute;
+      bottom: -8px;
+      right: -13px;
+      width: 25px;
+      height: 25px;
+      line-height: 25px;
+      text-align: center;
+     	background-color: #b2f5ea;
+      border-radius: 50%;
+      color: #1a202c;
+    }
+  }
+  .selectNo2 {
+    &:after {
+      content: '2';
+      position: absolute;
+      bottom: -8px;
+      right: -13px;
+      width: 25px;
+      width: 25px;
+      height: 25px;
+      line-height: 25px;
+      text-align: center;
+     	background-color: #b2f5ea;
+      border-radius: 50%;
+      color: #1a202c;
+    }
+  }
+  .selectNo3 {
+    &:after {
+      content: '3';
+      position: absolute;
+      bottom: -8px;
+      right: -13px;
+      width: 25px;
+      height: 25px;
+      line-height: 25px;
+      text-align: center;
+     	background-color: #b2f5ea;
+      border-radius: 50%;
+      color: #1a202c;
+    }
+  }
+  .selectNo4 {
+    &:after {
+      content: '4';
+      position: absolute;
+      bottom: -8px;
+      right: -13px;
+      width: 25px;
+      height: 25px;
+      line-height: 25px;
+      text-align: center;
+      background-color: #b2f5ea;
+      border-radius: 50%;
+      color: #1a202c;
+    }
+  }
+  .selectNo5 {
+    &:after {
+      content: '5';
+      position: absolute;
+      bottom: -8px;
+      right: -13px;
+      width: 25px;
+      height: 25px;
+      line-height: 25px;
+      text-align: center;
+      background-color: #b2f5ea;
+      border-radius: 50%;
+      color: #1a202c;
+    }
+  }
+  .selectNo6 {
+    &:after {
+      content: '6';
+      position: absolute;
+      bottom: -8px;
+      right: -13px;
+      width: 25px;
+      height: 25px;
+      line-height: 25px;
+      text-align: center;
+      background-color: #b2f5ea;
+      border-radius: 50%;
+      color: #1a202c;
+    }
   }
 }
 </style>
