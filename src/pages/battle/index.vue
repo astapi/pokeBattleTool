@@ -25,13 +25,13 @@
         </section>
       </section>
 
-      <div class="flex justify-around mt-5 lg:mt-0 lg:block lg:ml-1">
+      <div class="flex justify-around mt-5 lg:mt-0 lg:hidden">
         <button class="able-button" @click="saveBattle('win')">勝ち</button>
         <button class="able-button" @click="saveBattle('lose')">負け</button>
       </div>
 
       <div class="hidden lg:block" style="width: 16%;">
-        <div class="ml-1">
+        <div class="flex justify-around">
           <button class="able-button" @click="saveBattle('win')">勝ち</button>
           <button class="able-button" @click="saveBattle('lose')">負け</button>
         </div>

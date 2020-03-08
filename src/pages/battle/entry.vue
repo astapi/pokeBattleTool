@@ -7,8 +7,8 @@
     <section @click="hiddenHelp" v-if="visibleHelp" class="overlay fixed top-0 left-0 z-10 opacity-50 w-screen h-screen bg-gray-500">
     </section>
 
-    <div v-if="visibleHelp" class="help fixed left-0 flex justify-center z-20 p-5 w-full" style="top: 60px">
-      <div @click="hiddenHelp" class="flex justify-center p-5 relative bg-white shadow border rounded">
+    <div @click="hiddenHelp" v-if="visibleHelp" class="help fixed left-0 flex justify-center z-20 p-5 w-full" style="top: 60px">
+      <div class="flex justify-center p-5 relative bg-white shadow border rounded">
         <div class="absolute bg-white rounded-full z-30" style="top: -10px; right: -10px">
           <span><i class="far fa-times-circle text-3xl"></i></span>
         </div>
@@ -20,20 +20,19 @@
       </div>
     </div>
 
-    <section class="party mt-24 lg:mt-0 w-full relative block lg:flex lg:justify-around">
-      <div class="absolute right-0 flex justify-center mt-5 mb-5" style="top: -70px;">
-         <nuxt-link to="/party" class="mx-auto able-button">
-           チーム選択へ
-         </nuxt-link>
-      </div>
-
-      <section class="my-party lg:w-2/5">
+    <section class="party mt-24 lg:mt-0 w-full block lg:flex lg:justify-around">
+      <section class="my-party relative lg:mt-10 lg:w-2/5">
         <div class="bg-white shadow rounded flex flex-col justify-center">
           <MyParty
             v-if="myParty.length > 0"
             :party-data="myParty"
             @select="selectFromMyParty"
           />
+          <div class="absolute right-0 flex justify-center mt-5 mb-5 lg:static" style="top: -70px;">
+             <nuxt-link to="/party" class="mx-auto able-button">
+               チーム選択へ
+             </nuxt-link>
+          </div>
         </div>
       </section>
 
