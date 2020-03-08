@@ -6,11 +6,11 @@
       </button>
     </div>
     <div class="search-list w-full mt-3 lg:pl-5 border-solid">
-      <SearchFromPokemonList
+      <PokemonList
         @select="selectEnemy"
         :pokemon-list="pokemonDataList"
+        max-select="maxSelect"
         class="flex flex-wrap justify-around"
-        :max-select="6"
       />
     </div>
   </div>
@@ -19,11 +19,11 @@
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
 import { PokemonData } from '@/interface/pokemon'
-import SearchFromPokemonList from '@/components/searchFromPokemonList.vue'
+import PokemonList from '@/components/pokemonList.vue'
 
 @Component({
   components: {
-    SearchFromPokemonList
+    PokemonList
   }
 })
 export default class SelectEnemy extends Vue {
