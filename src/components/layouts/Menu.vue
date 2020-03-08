@@ -207,10 +207,10 @@ html {
 }
 .bm-burger-button {
   position: absolute;
-  width: 36px;
-  height: 30px;
-  left: 36px;
-  top: 36px;
+  width: 20px;
+  height: 20px;
+  left: 15px;
+  top: 10px;
   cursor: pointer;
 }
 .bm-burger-button.hidden {
