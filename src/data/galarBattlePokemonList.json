@@ -54,6 +54,7 @@
 	"Gyarados",
 	"Rapidash",
 	"Aegislash",
+	"Doublade",
 	"Heatmor",
 	"Mawile",
 	"Avalugg",
@@ -115,6 +116,7 @@
 	"Togedemaru",
 	"Gastrodon",
 	"Toxicroak",
+	"Rhydon",
 	"Rhyperior",
 	"Toxapex",
 	"Dragapult",
@@ -153,6 +155,7 @@
 	"Boltund",
 	"Gourgeist",
 	"Darmanitan-Galar",
+	"Darmanitan",
 	"Rotom-Heat",
 	"Vespiquen",
 	"Clefable",
@@ -210,5 +213,11 @@
 	"Roserade",
 	"Rotom",
 	"Conkeldurr",
-	"Eldegoss"
+	"Eldegoss",
+	"Venusaur",
+	"Blastoise",
+	"Decidueye",
+	"Incineroar",
+	"Primarina",
+	"Ninetales-Alola"
 ]
