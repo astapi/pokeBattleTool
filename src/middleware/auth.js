@@ -2,7 +2,7 @@ import firebase from 'firebase/app'
 import 'firebase/auth'
 
 export default function({ route, store, redirect }) {
-  if (route.path === '/login') return
+  if (route.path.includes('/login')) return
   // if (store.state.loginUser.userUid === '') redirect('/login')
   store.commit('setIsLoading', true)
   return new Promise((resolve) => {
