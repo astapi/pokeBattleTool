@@ -1,9 +1,9 @@
 <template>
-  <div class="container mt-20" style="max-width: 1000px;">
+  <div class="container mt-20">
     <div class="mb-10 flex justify-center">
       <button class="able-button" @click="endSelect">チーム設定完了！</button>
     </div>
-    <div class="search-list w-full mt-3 border-solid">
+    <div class="search-list w-full mt-3 border-solid lg:px-40">
       <!-- <SearchFromPokemonManagementList
         @select="selectPokemonFromManagement"
       ></SearchFromPokemonManagementList> -->

@@ -3,12 +3,15 @@
     <section
       class="wrap flex flex-wrap mt-20 px-20 items-center justify-between"
     >
-      <div class="item md:w-2/5 lg:w-2/5">
-        <nuxt-link class="font-bold" to="/party">対戦を開始する</nuxt-link>
-      </div>
-      <div class="item md:w-2/5 lg:w-2/5">
-        <p class="font-bold">対戦のログ</p>
-      </div>
+      <nuxt-link class="item md:w-2/5 lg:w-2/5 font-bold" to="/party">
+        <button>対戦を開始する</button>
+      </nuxt-link>
+      <nuxt-link
+        class="item md:w-2/5 lg:w-2/5 font-bold mt-10 lg:mt-0"
+        to="/battle/log"
+      >
+        <button>対戦のログ</button>
+      </nuxt-link>
     </section>
 
     <section class="flex justify-start mt-10 lg:px-10 xl:px-10">
@@ -19,8 +22,6 @@
 
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
-import firebase from 'firebase/app'
-import 'firebase/firestore'
 import VHelp from '@/components/VHelp.vue'
 
 @Component({
@@ -42,7 +43,6 @@ export default class Index extends Vue {}
       @screen lg {
         @apply w-2/5;
       }
-      margin: 5px;
     }
   }
 }

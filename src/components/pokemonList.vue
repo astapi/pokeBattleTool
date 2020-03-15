@@ -3,13 +3,17 @@
     <div
       v-for="pokemon in pokemonList"
       :key="pokemon.zenkokuNo"
-      @click="select(pokemon)"
       class="mb-3 cursor-pointer w-24"
+      @click="select(pokemon)"
     >
       <PokemonImageAndName
         :image-url="pokemon.imageUrl"
         :name="pokemon.name"
-        :class="selectPokemonNameList.includes(pokemon.name) ? `relative selected selectNo${index(pokemon.name)}` : ''"
+        :class="
+          selectPokemonNameList.includes(pokemon.name)
+            ? `relative selected selectNo${index(pokemon.name)}`
+            : ''
+        "
       />
     </div>
   </div>
@@ -27,14 +31,18 @@ import PokemonImageAndName from '@/components/pokemon/pokemonImageAndName.vue'
 })
 export default class PokemonList extends Vue {
   @Prop() readonly pokemonList!: PokemonData[]
-  @Prop() maxSelect!: number;
+  @Prop() maxSelect!: number
+  @Prop() disableSelectNo: boolean = false
   selectPokemonNameList: string[] = []
 
   select(pokemon: PokemonData) {
     this.$emit('select', pokemon)
-    const index = this.selectPokemonNameList.findIndex((name) => pokemon.name === name)
+    if (this.disableSelectNo) return
+    const index = this.selectPokemonNameList.findIndex(
+      (name) => pokemon.name === name
+    )
     if (index === -1) {
-      if (this.selectPokemonNameList.length === this.maxSelect) return;
+      if (this.selectPokemonNameList.length === this.maxSelect) return
       this.selectPokemonNameList.push(pokemon.name)
       return
     }
@@ -42,7 +50,7 @@ export default class PokemonList extends Vue {
   }
 
   index(name: string) {
-    return this.selectPokemonNameList.findIndex((n) => n === name) + 1;
+    return this.selectPokemonNameList.findIndex((n) => n === name) + 1
   }
 }
 </script>
@@ -62,7 +70,7 @@ export default class PokemonList extends Vue {
       height: 25px;
       line-height: 25px;
       text-align: center;
-     	background-color: #b2f5ea;
+      background-color: #b2f5ea;
       border-radius: 50%;
       color: #1a202c;
     }
@@ -78,7 +86,7 @@ export default class PokemonList extends Vue {
       height: 25px;
       line-height: 25px;
       text-align: center;
-     	background-color: #b2f5ea;
+      background-color: #b2f5ea;
       border-radius: 50%;
       color: #1a202c;
     }
@@ -93,7 +101,7 @@ export default class PokemonList extends Vue {
       height: 25px;
       line-height: 25px;
       text-align: center;
-     	background-color: #b2f5ea;
+      background-color: #b2f5ea;
       border-radius: 50%;
       color: #1a202c;
     }

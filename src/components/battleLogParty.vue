@@ -1,6 +1,6 @@
 <template>
   <div
-    class="battle-log-party flex flex-wrap justify-around items-center w-40 h-48"
+    class="battle-log-party flex flex-wrap justify-around items-center w-40 h-48 lg:p-3"
   >
     <template v-for="pokemon of log[partyColumnName]">
       <PokemonImage
@@ -67,7 +67,7 @@ export default class battleLogParty extends Vue {
 
 <style lang="scss" scoped>
 .battle-log-party {
-  @apply bg-white shadow rounded p-3;
+  @apply bg-white shadow rounded;
 
   .pokemon-image {
     &.select {
@@ -76,8 +76,8 @@ export default class battleLogParty extends Vue {
       &:after {
         content: '1';
         position: absolute;
-        bottom: -8px;
-        right: -13px;
+        bottom: -7px;
+        right: -5px;
         width: 25px;
         height: 25px;
         line-height: 25px;
@@ -91,8 +91,8 @@ export default class battleLogParty extends Vue {
       &:after {
         content: '2';
         position: absolute;
-        bottom: -8px;
-        right: -13px;
+        bottom: -7px;
+        right: -5px;
         width: 25px;
         width: 25px;
         height: 25px;
@@ -107,8 +107,8 @@ export default class battleLogParty extends Vue {
       &:after {
         content: '3';
         position: absolute;
-        bottom: -8px;
-        right: -13px;
+        bottom: -7px;
+        right: -5px;
         width: 25px;
         height: 25px;
         line-height: 25px;
@@ -122,8 +122,8 @@ export default class battleLogParty extends Vue {
       &:after {
         content: '4';
         position: absolute;
-        bottom: -8px;
-        right: -13px;
+        bottom: -7px;
+        right: -5px;
         width: 25px;
         height: 25px;
         line-height: 25px;

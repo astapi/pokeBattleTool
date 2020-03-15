@@ -1,8 +1,8 @@
 <template>
   <div class="container relative p-5">
-    <section class="absolute right-0">
+    <!-- <section class="absolute right-0">
       <nuxt-link to="/" class="able-button">対戦データサマリ</nuxt-link>
-    </section>
+    </section> -->
 
     <section class="w-full flex flex-col items-center">
       <section class="sumary-result flex">
@@ -23,7 +23,7 @@
           </tbody>
         </table>
       </section>
-      <ul>
+      <ul class="w-full lg:w-auto">
         <template v-for="log of logList">
           <li
             :key="log.id"
@@ -40,7 +40,7 @@
               <BattleLogParty :log="log" type="enemy"></BattleLogParty>
             </section>
             <section>
-              {{ log.createdAt }}
+              {{ log.createdAt | formatDate }}
             </section>
           </li>
         </template>
@@ -61,6 +61,11 @@ import { pokemonDataFromNameOrManagemendId } from '@/utils/common'
 @Component({
   components: {
     BattleLogParty
+  },
+  filters: {
+    formatDate(date: Date): string {
+      return `${date.getFullYear()}/${date.getMonth()}/${date.getDay()}/${date.getHours()}:${date.getMinutes()}`
+    }
   }
 })
 export default class BattleLog extends Vue {
