@@ -4,19 +4,19 @@
     <div class="flex justify-center mt-10">
       <button
         @click="loginOnTwitter"
-        class="shadow rounded font-bold py-2 px-1 border border-700 rounded p-5"
+        class="shadow-md rounded font-bold py-2 px-2 border border-700 rounded p-5 bg-white"
       >
         twitterではじめる/ログイン
       </button>
     </div>
     <section class="flex justify-start mt-10 lg:px-20 xl:px-20">
-      <v-help />
+      <v-help class="shadow-md bg-white" />
     </section>
 
     <div class="flex justify-center mt-10">
       <button
         @click="loginOnTwitter"
-        class="shadow rounded font-bold py-2 px-1 border border-700 rounded p-5"
+        class="shadow-md rounded font-bold py-2 px-2 border border-700 rounded p-5 bg-white"
       >
         twitterではじめる/ログイン
       </button>
