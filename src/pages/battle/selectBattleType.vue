@@ -1,7 +1,7 @@
 <template>
   <div class="container mx-auto p-5 min-h-screen flex flex-col justify-center">
     <div class="flex justify-center">
-      <div class="flex flex-col lg:flex-row xl:flex-row">
+      <div class="flex flex-col lg:flex-row">
         <button
           class="able-button p-16 text-2xl"
           @click="setBattleType('single')"

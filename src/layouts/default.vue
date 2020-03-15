@@ -96,7 +96,7 @@ html {
 }
 .flex,
 .child-flex > * {
-  flex: 0 1 auto;
+  flex: 0 1 auto !important;
 }
 .bm-burger-button {
   z-index: 10;

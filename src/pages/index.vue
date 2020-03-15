@@ -1,5 +1,5 @@
 <template>
-  <div class="container min-h-screen p-5">
+  <div class="container mx-auto min-h-screen p-5">
     <section
       class="wrap flex flex-wrap mt-20 px-20 items-center justify-between"
     >
@@ -7,7 +7,7 @@
         <button>対戦を開始する</button>
       </nuxt-link>
       <nuxt-link
-        class="item md:w-2/5 lg:w-2/5 font-bold mt-10 lg:mt-0"
+        class="item md:w-2/5 lg:w-2/5 font-bold mt-10 md:mt-0 lg:mt-0"
         to="/battle/log"
       >
         <button>対戦のログ</button>
