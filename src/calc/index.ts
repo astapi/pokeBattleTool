@@ -56,5 +56,6 @@ export {MOVES} from '@/calc/data/moves';
 export {SPECIES} from '@/calc/data/species';
 export {NATURES} from '@/calc/data/natures';
 export {TYPE_CHART} from '@/calc/data/types';
-export {STATS, StatsTable, Stat, calcStat} from '@/calc/stats';
+// export {STATS, StatsTable, Stat, calcStat} from '@/calc/stats';
+export {STATS, StatsTable, calcStat} from '@/calc/stats';
 
