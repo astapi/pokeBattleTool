@@ -55,7 +55,7 @@ export default class Default extends Vue {
 
 <style lang="scss">
 html {
-  background-color: #F3F3F3;
+  background-color: #f3f3f3;
   font-family: sans-serif;
   input,
   select {

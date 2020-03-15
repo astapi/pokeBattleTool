@@ -29,9 +29,10 @@ export default class LoginLayout extends Vue {}
 
 <style lang="scss">
 html {
-  background-color: #F3F3F3;
+  background-color: #f3f3f3;
   font-family: sans-serif;
-  input, select {
+  input,
+  select {
     margin: 0;
     padding: 0;
     background: none;
@@ -44,14 +45,14 @@ html {
     appearance: none;
   }
 
-  input[type="text"],
+  input[type='text'],
   textarea {
     outline: none;
     border: 1px solid #aaa;
-    -webkit-transition: all .3s;
-    transition: all .3s;
+    -webkit-transition: all 0.3s;
+    transition: all 0.3s;
   }
-  input[type="text"]:focus,
+  input[type='text']:focus,
   textarea:focus {
     box-shadow: 0 0 7px #1abc9c;
     border: 1px solid #1abc9c;

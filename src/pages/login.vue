@@ -3,8 +3,8 @@
     <div class="font-bold text-2xl text-center">PokemonBattleTool</div>
     <div class="flex justify-center mt-10">
       <button
-        @click="loginOnTwitter"
         class="shadow-md rounded font-bold py-2 px-2 border border-700 rounded p-5 bg-white"
+        @click="loginOnTwitter"
       >
         twitterではじめる/ログイン
       </button>
@@ -15,8 +15,8 @@
 
     <div class="flex justify-center mt-10">
       <button
-        @click="loginOnTwitter"
         class="shadow-md rounded font-bold py-2 px-2 border border-700 rounded p-5 bg-white"
+        @click="loginOnTwitter"
       >
         twitterではじめる/ログイン
       </button>

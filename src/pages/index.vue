@@ -15,7 +15,7 @@
     </section>
 
     <section class="flex justify-start mt-10 lg:px-10 xl:px-10">
-      <v-help class="shadow bg-gray-100" />
+      <v-help class="shadow-md bg-white" />
     </section>
   </div>
 </template>
