@@ -6,9 +6,9 @@
     </div>
     <div class="search-list w-full mt-3 pt-10 border-solid">
       <SearchFromPokemonList
-        @select="select"
         :pokemon-list="pokemonDataList"
         class="flex flex-wrap justify-around"
+        @select="select"
       />
     </div>
   </div>
@@ -16,7 +16,7 @@
 
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
-import { PokemonData } from '../interface/pokemon'
+import { PokemonData } from '@/interface/pokemon'
 import SearchFromPokemonList from '@/components/searchFromPokemonList.vue'
 import Pokemon from '@/components/pokemon/pokemon.vue'
 import PokemonStats from '@/components/pokemon/pokemonStats.vue'

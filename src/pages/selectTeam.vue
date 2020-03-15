@@ -1,13 +1,13 @@
 <template>
   <div class="container" style="max-width: 1000px;">
     <div class="mb-10 flex justify-center">
-      <button @click="endSelect" class="able-button">チーム設定完了！</button>
+      <button class="able-button" @click="endSelect">チーム設定完了！</button>
     </div>
     <div class="search-list w-full mt-3 pl-5 border-solid">
       <SearchFromPokemonList
-        @select="selectPokemon"
         :pokemon-list="pokemonDataList"
         class="flex flex-wrap justify-around"
+        @select="selectPokemon"
       />
     </div>
   </div>
@@ -15,7 +15,7 @@
 
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
-import { PokemonData } from '../interface/pokemon'
+import { PokemonData } from '@/interface/pokemon'
 import SearchFromPokemonList from '@/components/searchFromPokemonList.vue'
 
 @Component({
@@ -49,13 +49,5 @@ export default class SelectTeam extends Vue {
 <style lang="scss" scoped>
 .container {
   @apply p-20;
-
-  .able-button {
-    @apply bg-blue-500 text-white font-bold py-2 px-1 border border-blue-700 rounded;
-
-    &:hover {
-      @apply bg-blue-700;
-    }
-  }
 }
 </style>

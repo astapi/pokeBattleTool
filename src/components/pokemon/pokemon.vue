@@ -1,8 +1,5 @@
 <template>
-  <div
-    class="pokemon p-1"
-    style="min-height: 0px;"
-  >
+  <div class="pokemon p-1" style="min-height: 0px;">
     <div class="flex relative">
       <div class="w-3/12">
         <PokemonImageAndName
@@ -12,7 +9,7 @@
         />
         <div class="type-section flex flex-col justify-center">
           <template v-for="type of pokemon.types">
-            <PokemonType :type-name="type" :key="type" />
+            <PokemonType :key="type" :type-name="type" />
           </template>
         </div>
       </div>
@@ -28,7 +25,7 @@
 
 <script lang="ts">
 import { Component, Vue, Prop } from 'nuxt-property-decorator'
-import { PokemonData } from '../../interface/pokemon'
+import { PokemonData } from '@/interface/pokemon'
 import PokemonType from '@/components/pokemon/pokemonType.vue'
 import PokemonTypeWeekList from '@/components/pokemon/pokemonTypeWeekList.vue'
 import PokemonImageAndName from '@/components/pokemon/pokemonImageAndName.vue'

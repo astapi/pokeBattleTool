@@ -1,10 +1,10 @@
 <template>
   <div class="pokemon-party flex flex-wrap justify-around">
     <div
-      @click="select(pokemon)"
       v-for="pokemon of partyData"
       :key="pokemon.name"
       class="w-2/4"
+      @click="select(pokemon)"
     >
       <Pokemon :id="`pokemon-${pokemon.name}`" :pokemon="pokemon" />
     </div>
@@ -13,7 +13,7 @@
 
 <script lang="ts">
 import { Component, Vue, Prop } from 'nuxt-property-decorator'
-import { PokemonData } from '../interface/pokemon'
+import { PokemonData } from '@/interface/pokemon'
 import Pokemon from '@/components/pokemon/pokemon.vue'
 
 @Component({

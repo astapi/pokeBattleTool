@@ -24,8 +24,11 @@
         </table>
       </section>
       <ul>
-        <template v-for="log of logList" >
-          <li :key="log.id" class="flex flex-col pt-5 pb-5 border-solid border-b">
+        <template v-for="log of logList">
+          <li
+            :key="log.id"
+            class="flex flex-col pt-5 pb-5 border-solid border-b"
+          >
             <div>{{ battleLogToString(log.battleType) }}</div>
             <section class="flex">
               <BattleLogParty :log="log" type="my"></BattleLogParty>
@@ -48,13 +51,12 @@
 
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
-import { PokemonData, PokemonFromDB } from '@/interface/pokemon'
+import firebase from 'firebase/app'
+import { PokemonData } from '@/interface/pokemon'
 import { BattleLogData, BattleType } from '@/interface/battoleLog'
 import BattleLogParty from '@/components/battleLogParty.vue'
-import firebase from 'firebase/app'
 import 'firebase/firestore'
-import { pokemonDataFromNameOrManagemendId } from '../../utils/common'
-const pokeData = require('@/data/pokeData.json')
+import { pokemonDataFromNameOrManagemendId } from '@/utils/common'
 
 @Component({
   components: {
@@ -65,24 +67,25 @@ export default class BattleLog extends Vue {
   logList: BattleLogData[] = []
 
   async mounted() {
-    await this.fetchBattleLog();
+    await this.fetchBattleLog()
   }
 
   async fetchBattleLog() {
     this.$store.commit('setIsLoading', true)
-    const logSnap = await firebase.firestore()
+    const logSnap = await firebase
+      .firestore()
       .collection('battleLog')
       .where('userUid', '==', this.$store.state.loginUser.userUid)
       .orderBy('createdAt', 'desc')
       .limit(20)
-      .get();
+      .get()
     for (const doc of logSnap.docs) {
-      const data = doc.data();
-      let myParty: PokemonData[] = [];
+      const data = doc.data()
+      const myParty: PokemonData[] = []
       for (const p of data.myParty) {
-        myParty.push(await pokemonDataFromNameOrManagemendId(p));
+        myParty.push(await pokemonDataFromNameOrManagemendId(p))
       }
-      let enemyParty: PokemonData[] = [];
+      const enemyParty: PokemonData[] = []
       for (const p of data.enemyParty) {
         enemyParty.push(await pokemonDataFromNameOrManagemendId(p))
       }
@@ -95,22 +98,23 @@ export default class BattleLog extends Vue {
         result: data.result,
         battleType: data.battleType ? data.battleType : 'single',
         createdAt: data.createdAt.toDate(),
-        updatedAt: data.updatedAt.toDate(),
-      });
+        updatedAt: data.updatedAt.toDate()
+      })
     }
     this.$store.commit('setIsLoading', false)
   }
 
   get win() {
-    return this.logList.filter((log) => log.result === 'win').length;
+    return this.logList.filter((log) => log.result === 'win').length
   }
+
   get lose() {
-    return this.logList.filter((log) => log.result === 'lose').length;
+    return this.logList.filter((log) => log.result === 'lose').length
   }
 
   get winRate() {
-    const winLog = this.logList.filter((log) => log.result === 'win');
-    return Math.floor(winLog.length / this.logList.length * 100);
+    const winLog = this.logList.filter((log) => log.result === 'win')
+    return Math.floor((winLog.length / this.logList.length) * 100)
   }
 
   battleLogToString(battleType: BattleType) {

@@ -2,7 +2,7 @@
   <div class="pokemon-type-week">
     <p class="font-bold text-sm">x{{ weekMagnification }}</p>
     <div class="flex flex-wrap">
-      <div class="type-item" :key="typeName" v-for="typeName in typeNameList">
+      <div v-for="typeName in typeNameList" :key="typeName" class="type-item">
         <PokemonType :type-name="typeName" />
       </div>
     </div>
@@ -13,7 +13,7 @@
 import { Component, Vue, Prop } from 'nuxt-property-decorator'
 import { TYPE_LIST } from '@/interface/pokemonType'
 import PokemonType from '@/components/pokemon/pokemonType.vue'
-import { Type } from '../../calc/data/types'
+import { Type } from '@/calc/data/types'
 
 @Component({
   components: {

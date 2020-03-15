@@ -19,7 +19,7 @@
 
 <script lang="ts">
 import { Component, Vue, Prop } from 'nuxt-property-decorator'
-import { PokemonData } from '../../interface/pokemon'
+import { PokemonData } from '@/interface/pokemon'
 
 @Component({})
 export default class PokemonStats extends Vue {
