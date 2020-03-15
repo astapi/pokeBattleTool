@@ -13,7 +13,7 @@ module.exports = {
     "project": "./tsconfig.json"
   },
   extends: [
-    '@nuxtjs',
+    '@nuxtjs/eslint-config-typescript',
     'prettier',
     'prettier/vue',
     'plugin:prettier/recommended',
