@@ -1,15 +1,15 @@
 <template>
   <div class="container mt-20" style="max-width: 1000px;">
     <div class="mb-10 flex justify-center">
-      <button @click="endSelect" class="able-button">チーム設定完了！</button>
+      <button class="able-button" @click="endSelect">チーム設定完了！</button>
     </div>
     <div class="search-list w-full mt-3 border-solid">
       <!-- <SearchFromPokemonManagementList
         @select="selectPokemonFromManagement"
       ></SearchFromPokemonManagementList> -->
       <SearchFromPokemonList
-        @select="selectPokemon"
         :pokemon-list="pokemonDataList"
+        @select="selectPokemon"
       />
     </div>
   </div>
@@ -17,17 +17,17 @@
 
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
-import { PokemonData, PokemonManagementData } from '@/interface/pokemon'
+import firebase from 'firebase/app'
+import { PokemonData } from '@/interface/pokemon'
 import SearchFromPokemonList from '@/components/searchFromPokemonList.vue'
 import SearchFromPokemonManagementList from '@/components/searchFromPokemonManagementList.vue'
-import firebase from 'firebase/app'
 import 'firebase/firestore'
-import { changePokemonNameToOtherLang } from '../../utils/common'
+import { changePokemonNameToOtherLang } from '@/utils/common'
 
 @Component({
   components: {
     SearchFromPokemonManagementList,
-    SearchFromPokemonList,
+    SearchFromPokemonList
   }
 })
 export default class EditParty extends Vue {
@@ -38,27 +38,32 @@ export default class EditParty extends Vue {
   }
 
   selectPokemonFromManagement(pokemon: PokemonData & { managementId: string }) {
-    const nameEn = changePokemonNameToOtherLang(pokemon.name);
+    const nameEn = changePokemonNameToOtherLang(pokemon.name)
     const index = this.party.findIndex((p) => nameEn === p.name)
     if (index === -1) {
-      this.party.push({ name: nameEn, isManagement: true, managementId: pokemon.managementId });
+      this.party.push({
+        name: nameEn,
+        isManagement: true,
+        managementId: pokemon.managementId
+      })
       return
     }
     this.party.splice(index, 1)
   }
 
   selectPokemon(pokemon: PokemonData) {
-    const nameEn = changePokemonNameToOtherLang(pokemon.name);
+    const nameEn = changePokemonNameToOtherLang(pokemon.name)
     const index = this.party.findIndex((p) => nameEn === p.name)
     if (index === -1) {
-      this.party.push({ name: nameEn, isManagement: false });
+      this.party.push({ name: nameEn, isManagement: false })
       return
     }
     this.party.splice(index, 1)
   }
 
   async endSelect() {
-    await firebase.firestore()
+    await firebase
+      .firestore()
       .collection('party')
       .add({
         userUid: this.$store.state.loginUser.userUid,
