@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container mx-auto" style="max-width: 756px;">
     <div v-if="!isSend" class="pt-20 lg:p-20">
       <h2 class="font-bold">要望・問い合わせ</h2>
       <textarea

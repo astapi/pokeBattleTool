@@ -105,5 +105,6 @@ export default class ListParty extends Vue {
 
 <style lang="scss" scoped>
 .container {
+  max-width: 756px;
 }
 </style>

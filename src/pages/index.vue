@@ -34,6 +34,8 @@ export default class Index extends Vue {}
 
 <style lang="scss" scoped>
 .container {
+  max-width: 756px;
+
   .wrap {
     .item {
       @apply w-full border shadow bg-white h-20 flex justify-center items-center rounded;

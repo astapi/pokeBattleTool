@@ -7,7 +7,8 @@
       <!-- <SearchFromPokemonManagementList
         @select="selectPokemonFromManagement"
       ></SearchFromPokemonManagementList> -->
-      <SearchFromPokemonList
+      <PokemonList
+        class="flex flex-wrap justify-around"
         :pokemon-list="pokemonDataList"
         @select="selectPokemon"
       />
@@ -19,7 +20,7 @@
 import { Component, Vue } from 'nuxt-property-decorator'
 import firebase from 'firebase/app'
 import { PokemonData } from '@/interface/pokemon'
-import SearchFromPokemonList from '@/components/searchFromPokemonList.vue'
+import PokemonList from '@/components/PokemonList.vue'
 import SearchFromPokemonManagementList from '@/components/searchFromPokemonManagementList.vue'
 import 'firebase/firestore'
 import { changePokemonNameToOtherLang } from '@/utils/common'
@@ -27,7 +28,7 @@ import { changePokemonNameToOtherLang } from '@/utils/common'
 @Component({
   components: {
     SearchFromPokemonManagementList,
-    SearchFromPokemonList
+    PokemonList
   }
 })
 export default class EditParty extends Vue {

@@ -1,5 +1,5 @@
 <template>
-  <div class="container p-5 flex flex-col justify-center">
+  <div class="container mx-auto p-5 flex flex-col justify-center">
     <div class="font-bold text-2xl text-center">PokemonBattleTool</div>
     <div class="flex justify-center mt-10">
       <button
@@ -65,6 +65,7 @@ export default class Logout extends Vue {
 
 <style lang="scss" scoped>
 .container {
+  max-width: 756px;
   .login-button {
     background-color: #1da1f2;
   }
