@@ -35,7 +35,6 @@ export default class Default extends Vue {
   created() {
     if (this.$store.state.battle.battlePokemonDataList.length !== 0) return
 
-    // const pokeData = require('@/data/pokeData.json')
     const battleSelectPokemonNameList = require('@/data/galarBattlePokemonList.json')
     const list: PokemonData[] = battleSelectPokemonNameList.map(
       (name: string): PokemonData => {
