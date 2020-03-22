@@ -1,14 +1,22 @@
-import * as calc from '@/calc/index'
-import { TYPE_CHART, Type } from '@/calc/data/types';
 import firebase from 'firebase/app'
+import * as calc from '@/calc/index'
+import { TYPE_CHART, Type } from '@/calc/data/types'
 import 'firebase/firestore'
-import { PokemonManagementData, PokemonData } from '~/interface/pokemon';
+import { PokemonManagementData, PokemonData } from '~/interface/pokemon'
 
-export const pokemonDataFromNameOrManagemendId = async ({ name, managementId }: { name?: string, managementId?: string}): Promise<PokemonData> => {
+export const pokemonDataFromNameOrManagemendId = async ({
+  name,
+  managementId
+}: {
+  name?: string
+  managementId?: string
+}): Promise<PokemonData> => {
   if (managementId) {
-    const doc = await firebase.firestore()
+    const doc = await firebase
+      .firestore()
       .collection('pokemonManagementData')
-      .doc(managementId).get();
+      .doc(managementId)
+      .get()
     const data = doc.data() as PokemonManagementData
     const calcPokemon = new calc.Pokemon(8, data.name, {
       level: 50,
@@ -18,7 +26,7 @@ export const pokemonDataFromNameOrManagemendId = async ({ name, managementId }: 
       evs: data.evs,
       moves: data.moves
     })
-    const types = typesFromClacPokemon(calcPokemon);
+    const types = typesFromClacPokemon(calcPokemon)
     return {
       name: changePokemonNameToOtherLang(data.name),
       calcPokemon,
@@ -26,80 +34,80 @@ export const pokemonDataFromNameOrManagemendId = async ({ name, managementId }: 
       typeAisho: weekTypeFromCalcPokemon(types),
       imageUrl: `https://storage.cloud.google.com/pokebattletool.appspot.com/pokemon/icon/${data.name}.png`,
       isManagement: true,
-      managementId,
-    };
+      managementId
+    }
   }
-  return pokemonDataFromName(name!);
+  return pokemonDataFromName(name!)
 }
 
 export const pokemonDataFromName = (name: string): PokemonData => {
   const calcPokemon = new calc.Pokemon(8, name!, { level: 50 })
-  const types = typesFromClacPokemon(calcPokemon);
+  const types = typesFromClacPokemon(calcPokemon)
   return {
     name: changePokemonNameToOtherLang(name!),
     calcPokemon,
     types,
     typeAisho: weekTypeFromCalcPokemon(types),
     imageUrl: `https://storage.googleapis.com/pokebattletool.appspot.com/pokemon/icon/${name}.png`,
-    isManagement: false,
+    isManagement: false
   }
 }
 
 const typesFromClacPokemon = (calcPokemon: calc.Pokemon): Type[] => {
-  const types: Type[] = [calcPokemon.type1];
-  if (calcPokemon.type2) types.push(calcPokemon.type2);
-  return types;
+  const types: Type[] = [calcPokemon.type1]
+  if (calcPokemon.type2) types.push(calcPokemon.type2)
+  return types
 }
 
 const typeList: Type[] = [
-  'None'
-  ,'Normal'
-  ,'Grass'
-  ,'Fire'
-  ,'Water'
-  ,'Electric'
-  ,'Ice'
-  ,'Flying'
-  ,'Bug'
-  ,'Poison'
-  ,'Ground'
-  ,'Rock'
-  ,'Fighting'
-  ,'Psychic'
-  ,'Ghost'
-  ,'Dragon'
-  ,'Dark'
-  ,'Steel'
-  ,'Fairy'
-];
-type Types = {[type in Type]?: number};
+  'None',
+  'Normal',
+  'Grass',
+  'Fire',
+  'Water',
+  'Electric',
+  'Ice',
+  'Flying',
+  'Bug',
+  'Poison',
+  'Ground',
+  'Rock',
+  'Fighting',
+  'Psychic',
+  'Ghost',
+  'Dragon',
+  'Dark',
+  'Steel',
+  'Fairy'
+]
+type Types = { [type in Type]?: number }
 const weekTypeFromCalcPokemon = (types: Type[]): any => {
-  const typeChart = TYPE_CHART[8];
-  const typeAishoTmp: Types = {};
+  const typeChart = TYPE_CHART[8]
+  const typeAishoTmp: Types = {}
   for (const myType of types) {
     for (const type of typeList) {
       if (typeAishoTmp[type]) {
-        typeAishoTmp[type] = typeAishoTmp[type]! * typeChart[type]![myType]!;
+        typeAishoTmp[type] = typeAishoTmp[type]! * typeChart[type]![myType]!
       } else {
-        typeAishoTmp[type] = typeChart[type]![myType];
+        typeAishoTmp[type] = typeChart[type]![myType]
       }
     }
   }
 
-  const typeAisho: any = {};
+  const typeAisho: any = {}
   for (const [key, value] of Object.entries(typeAishoTmp)) {
-    if (value === 1) continue;
-    if (value === undefined) continue;
+    if (value === 1) continue
+    if (value === undefined) continue
     if (typeAisho[value]) {
-      typeAisho[value].push(key);
+      typeAisho[value].push(key)
     } else {
-      typeAisho[value] = [key];
+      typeAisho[value] = [key]
     }
   }
-  return typeAisho;
+  return typeAisho
 }
 
-const pokemonNameMappingOtherLang: any = require('@/data/pokemonNameMap.json');
+const pokemonNameMappingOtherLang: any = require('@/data/pokemonNameMap.json')
 export const changePokemonNameToOtherLang = (name: string): string => {
-  return pokemonNameMappingOtherLang[name];
+  return pokemonNameMappingOtherLang[name]
 }
