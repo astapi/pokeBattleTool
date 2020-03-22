@@ -27,9 +27,9 @@
         <template v-for="log of logList">
           <li
             :key="log.id"
-            class="flex flex-col pt-5 pb-5 border-solid border-b"
+            class="flex flex-col items-center pt-5 pb-5 border-solid border-b"
           >
-            <div>{{ battleLogToString(log.battleType) }}</div>
+            <div class="font-bold">{{ battleLogToString(log.battleType) }}</div>
             <section class="flex">
               <BattleLogParty :log="log" type="my"></BattleLogParty>
 

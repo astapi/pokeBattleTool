@@ -1,12 +1,12 @@
 <template>
-  <div class="p-5 flex flex-col justify-center">
+  <div class="container p-5 flex flex-col justify-center">
     <div class="font-bold text-2xl text-center">PokemonBattleTool</div>
     <div class="flex justify-center mt-10">
       <button
-        class="shadow-md rounded font-bold py-2 px-2 border border-700 rounded p-5 bg-white"
+        class="login-button text-white shadow-md rounded font-bold py-2 px-2 border border-700 rounded p-5"
         @click="loginOnTwitter"
       >
-        twitterではじめる/ログイン
+        Twitterではじめる/ログイン
       </button>
     </div>
     <section class="flex justify-start mt-10 lg:px-20 xl:px-20">
@@ -15,10 +15,10 @@
 
     <div class="flex justify-center mt-10">
       <button
-        class="shadow-md rounded font-bold py-2 px-2 border border-700 rounded p-5 bg-white"
+        class="login-button text-white shadow-md rounded font-bold py-2 px-2 border border-700 rounded p-5"
         @click="loginOnTwitter"
       >
-        twitterではじめる/ログイン
+        Twitterではじめる/ログイン
       </button>
     </div>
   </div>
@@ -65,5 +65,8 @@ export default class Logout extends Vue {
 
 <style lang="scss" scoped>
 .container {
+  .login-button {
+    background-color: #1da1f2;
+  }
 }
 </style>
