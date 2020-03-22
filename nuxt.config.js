@@ -6,14 +6,49 @@ module.exports = {
    ** Headers of the page
    */
   head: {
-    title: process.env.npm_package_name || '',
+    title: 'ぽけばと | ポケモン対戦補助ツール',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       {
         hid: 'description',
         name: 'description',
-        content: process.env.npm_package_description || ''
+        content: 'ぽけばとはポケモンの対戦を補助するツールです'
+      },
+      {
+        hid: 'og:title',
+        property: 'og:title',
+        content: 'ぽけばと | ポケモン対戦補助ツール'
+      },
+      {
+        hid: 'og:image',
+        property: 'og:image',
+        content: '/ogimage.png'
+      },
+      {
+        hid: 'og:url',
+        property: 'og:url',
+        content: 'https://pokebat.tools'
+      },
+      {
+        hid: 'og:description',
+        property: 'og:description',
+        content: 'ぽけばとはポケモンの対戦を補助するツールです'
+      },
+      {
+        hid: 'twitter:description',
+        property: 'twitter:description',
+        content: 'ぽけばとはポケモンの対戦を補助するツールです'
+      },
+      {
+        hid: 'twitter:title',
+        property: 'twitter:title',
+        content: 'ぽけばと | ポケモン対戦補助ツール'
+      },
+      {
+        hid: 'twitter:image',
+        property: 'twitter:image',
+        content: '/ogimage.png'
       }
     ],
     link: [
@@ -21,6 +56,11 @@ module.exports = {
         rel: 'preload',
         href: 'https://kit.fontawesome.com/30869cfbe3.js',
         crossorigin: 'anonymous',
+        as: 'script'
+      },
+      {
+        rel: 'preload',
+        href: 'https://www.gstatic.com/firebasejs/7.12.0/firebase-analytics.js',
         as: 'script'
       }
     ],
@@ -82,6 +122,7 @@ module.exports = {
     FIREBASE_STORAGEBUCKET: process.env.FIREBASE_STORAGEBUCKET,
     FIREBASE_MESSAGING_SENDER_ID: process.env.FIREBASE_MESSAGING_SENDER_ID,
     FIREBASE_APPID: process.env.FIREBASE_APPID,
-    FIREBASE_MESUREMENTID: process.env.FIREBASE_MESUREMENTID
+    FIREBASE_MESUREMENTID: process.env.FIREBASE_MESUREMENTID,
+    ENV: process.env.ENV
   }
 }

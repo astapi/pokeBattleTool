@@ -1,5 +1,6 @@
 import * as firebase from 'firebase/app'
 import 'firebase/auth'
+import 'firebase/analytics'
 
 const apiKey = process.env.FIREBASE_APIKEY
 const authDomain = process.env.FIREBASE_AUTHDOMAIN
@@ -23,4 +24,7 @@ const firebaseConfig = {
 
 if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig)
+  if (process.env.ENV !== 'develop') {
+    firebase.analytics()
+  }
 }
