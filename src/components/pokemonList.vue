@@ -32,12 +32,17 @@ import PokemonImageAndName from '@/components/pokemon/pokemonImageAndName.vue'
 export default class PokemonList extends Vue {
   @Prop() readonly pokemonList!: PokemonData[]
   @Prop() maxSelect!: number
-  @Prop() disableSelectNo: boolean = false
+  @Prop() disableSelectNo!: boolean
   selectPokemonNameList: string[] = []
+  disableSelectNoBool: boolean = false
+
+  mounted() {
+    this.disableSelectNoBool = this.disableSelectNo
+  }
 
   select(pokemon: PokemonData) {
     this.$emit('select', pokemon)
-    if (this.disableSelectNo) return
+    if (this.disableSelectNoBool) return
     const index = this.selectPokemonNameList.findIndex(
       (name) => pokemon.name === name
     )
