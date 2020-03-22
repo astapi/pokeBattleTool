@@ -1,5 +1,6 @@
 import * as firebase from 'firebase/app'
 import 'firebase/auth'
+import 'firebase/firestore'
 import 'firebase/analytics'
 
 const apiKey = process.env.FIREBASE_APIKEY
@@ -24,6 +25,7 @@ const firebaseConfig = {
 
 if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig)
+  firebase.firestore().enablePersistence()
   if (process.env.ENV !== 'develop') {
     firebase.analytics()
   }

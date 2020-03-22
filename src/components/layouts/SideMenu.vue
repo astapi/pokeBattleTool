@@ -7,8 +7,8 @@
         </nuxt-link>
       </div>
       <div>
-        <nuxt-link to="/party">
-          パーティ設定
+        <nuxt-link to="/team">
+          チーム設定
         </nuxt-link>
       </div>
       <div>

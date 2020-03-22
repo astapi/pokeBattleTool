@@ -71,7 +71,7 @@ export default class EditParty extends Vue {
         createdAt: firebase.firestore.FieldValue.serverTimestamp(),
         updatedAt: firebase.firestore.FieldValue.serverTimestamp()
       })
-    this.$router.push({ path: '/party' })
+    this.$router.push({ path: '/team' })
   }
 }
 </script>

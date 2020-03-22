@@ -1,15 +1,28 @@
 <template>
   <div class="container relative">
-    <section @click="showHelp" class="absolute" style="top: 10px; right: 10px;">
+    <section class="absolute" style="top: 10px; right: 10px;" @click="showHelp">
       <span><i class="far fa-question-circle text-2xl"></i></span>
     </section>
 
-    <section @click="hiddenHelp" v-if="visibleHelp" class="overlay fixed top-0 left-0 z-10 opacity-50 w-screen h-screen bg-gray-500">
-    </section>
+    <section
+      v-if="visibleHelp"
+      class="overlay fixed top-0 left-0 z-10 opacity-50 w-screen h-screen bg-gray-500"
+      @click="hiddenHelp"
+    ></section>
 
-    <div @click="hiddenHelp" v-if="visibleHelp" class="help fixed left-0 flex justify-center z-20 p-5 w-full" style="top: 60px">
-      <div class="flex justify-center p-5 relative bg-white shadow border rounded">
-        <div class="absolute bg-white rounded-full z-30" style="top: -10px; right: -10px">
+    <div
+      v-if="visibleHelp"
+      class="help fixed left-0 flex justify-center z-20 p-5 w-full"
+      style="top: 60px"
+      @click="hiddenHelp"
+    >
+      <div
+        class="flex justify-center p-5 relative bg-white shadow border rounded"
+      >
+        <div
+          class="absolute bg-white rounded-full z-30"
+          style="top: -10px; right: -10px"
+        >
           <span><i class="far fa-times-circle text-3xl"></i></span>
         </div>
         <ul class="font-bold">
@@ -28,18 +41,21 @@
             :party-data="myParty"
             @select="selectFromMyParty"
           />
-          <div class="absolute right-0 flex justify-center mt-5 mb-5 lg:static" style="top: -70px;">
-             <nuxt-link to="/party" class="mx-auto able-button">
-               チーム選択へ
-             </nuxt-link>
+          <div
+            class="absolute right-0 flex justify-center mt-5 mb-5 lg:static"
+            style="top: -70px;"
+          >
+            <nuxt-link to="/team" class="mx-auto able-button">
+              チーム選択へ
+            </nuxt-link>
           </div>
         </div>
       </section>
 
       <div class="mt-5 flex justify-center block lg:hidden">
         <button
-          @click="startBattle"
           :class="battleReady ? 'able-button' : 'disable-button'"
+          @click="startBattle"
         >
           開始
         </button>
@@ -49,10 +65,14 @@
         v-if="myParty.length > 0 && enemyParty.length > 0"
         class="hidden lg:flex lg:flex-col-reverse lg:justify-center lg:w-1/6"
       >
-        <template v-for="(baseStatsSpeedPokemonList, index) of battolePokemonSpeedList">
+        <template
+          v-for="(baseStatsSpeedPokemonList, index) of battolePokemonSpeedList"
+        >
           <div :key="index">
             <div class="flex">
-              <div class="text-sm">{{ baseStatsSpeedPokemonList[0].baseStatsSpeed }}族</div>  
+              <div class="text-sm">
+                {{ baseStatsSpeedPokemonList[0].baseStatsSpeed }}族
+              </div>
               <div
                 v-for="speedData of baseStatsSpeedPokemonList"
                 :key="speedData.name"
@@ -64,7 +84,13 @@
             <div>
               <span class="text-xs">上方/無振/下降</span>
               <span class="text-xs">
-                <span class="font-bold">{{ Math.floor(baseStatsSpeedPokemonList[0].baseSpeed * 1.1) }}</span>/{{ baseStatsSpeedPokemonList[0].baseSpeed }}/{{ Math.floor(baseStatsSpeedPokemonList[0].baseSpeed * 0.9) }}</span>
+                <span class="font-bold">{{
+                  Math.floor(baseStatsSpeedPokemonList[0].baseSpeed * 1.1)
+                }}</span
+                >/{{ baseStatsSpeedPokemonList[0].baseSpeed }}/{{
+                  Math.floor(baseStatsSpeedPokemonList[0].baseSpeed * 0.9)
+                }}</span
+              >
             </div>
           </div>
         </template>
@@ -84,9 +110,9 @@
     <div class="mt-10 hidden lg:flex justify-center">
       <button
         v-if="battleReady"
-        @click="startBattle"
         class="mx-auto"
         :class="battleReady ? 'able-button' : 'disable-button'"
+        @click="startBattle"
       >
         開始
       </button>
@@ -96,15 +122,13 @@
 
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
-import { PokemonData, SpeedData, PokemonFromDB } from '@/interface/pokemon'
+import { PokemonData, SpeedData } from '@/interface/pokemon'
 import MyParty from '@/components/myParty.vue'
-import firebase from 'firebase/app'
-import 'firebase/firestore'
 import { BattleType } from '@/interface/battoleLog'
 
 @Component({
   components: {
-    MyParty,
+    MyParty
   }
 })
 export default class BattleEntry extends Vue {
@@ -125,21 +149,36 @@ export default class BattleEntry extends Vue {
 
   get battolePokemonSpeedList(): SpeedData[][] {
     // const ret: SpeedData[] = []
-    const a: any = {};
+    const a: any = {}
     for (const pokemon of this.allBattlePokemon) {
-      const baseStatsSpeed = pokemon.calcPokemon.species.bs.sp;
+      const baseStatsSpeed = pokemon.calcPokemon.species.bs.sp
       if (a[baseStatsSpeed]) {
-        const index = a[baseStatsSpeed].findIndex((p: PokemonData) => p.name === pokemon.name);
-        if (index === -1) a[baseStatsSpeed].push({ name: pokemon.name, imageUrl: pokemon.imageUrl, baseSpeed: pokemon.calcPokemon.rawStats.spe });
+        const index = a[baseStatsSpeed].findIndex(
+          (p: PokemonData) => p.name === pokemon.name
+        )
+        if (index === -1)
+          a[baseStatsSpeed].push({
+            name: pokemon.name,
+            imageUrl: pokemon.imageUrl,
+            baseSpeed: pokemon.calcPokemon.rawStats.spe
+          })
       } else {
-        a[baseStatsSpeed] = [{ name: pokemon.name, imageUrl: pokemon.imageUrl, baseSpeed: pokemon.calcPokemon.rawStats.spe }];
+        a[baseStatsSpeed] = [
+          {
+            name: pokemon.name,
+            imageUrl: pokemon.imageUrl,
+            baseSpeed: pokemon.calcPokemon.rawStats.spe
+          }
+        ]
       }
     }
-    const ret: SpeedData[][] = [];
+    const ret: SpeedData[][] = []
     for (const baseStatsSpeed of Object.keys(a)) {
-      ret.push(a[baseStatsSpeed].map((speedData: any) => {
-        return { ...speedData, baseStatsSpeed };
-      }));
+      ret.push(
+        a[baseStatsSpeed].map((speedData: any) => {
+          return { ...speedData, baseStatsSpeed }
+        })
+      )
     }
     return ret
   }
@@ -195,10 +234,11 @@ export default class BattleEntry extends Vue {
   }
 
   showHelp() {
-    this.visibleHelp = true;
+    this.visibleHelp = true
   }
+
   hiddenHelp() {
-    this.visibleHelp = false;
+    this.visibleHelp = false
   }
 }
 </script>

@@ -3,7 +3,7 @@
     <section
       class="wrap flex flex-wrap mt-20 px-20 items-center justify-between"
     >
-      <nuxt-link class="item md:w-2/5 lg:w-2/5 font-bold" to="/party">
+      <nuxt-link class="item md:w-2/5 lg:w-2/5 font-bold" to="/team">
         <button>対戦を開始する</button>
       </nuxt-link>
       <nuxt-link

@@ -1,7 +1,7 @@
 <template>
   <div class="container relative">
     <section class="absolute" style="top: 15px; right: 15px">
-      <nuxt-link to="/party/edit" class="able-button">
+      <nuxt-link to="/team/edit" class="able-button">
         チーム登録
       </nuxt-link>
     </section>
