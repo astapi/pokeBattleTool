@@ -88,11 +88,12 @@ const weekTypeFromCalcPokemon = (types: Type[]): any => {
 
   const typeAisho: any = {};
   for (const [key, value] of Object.entries(typeAishoTmp)) {
-    if(value === 1) continue;
-    if (value && typeAisho[value]) {
+    if (value === 1) continue;
+    if (value === undefined) continue;
+    if (typeAisho[value]) {
       typeAisho[value].push(key);
     } else {
-      typeAisho[value!] = [key];
+      typeAisho[value] = [key];
     }
   }
   return typeAisho;
