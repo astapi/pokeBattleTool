@@ -1,6 +1,6 @@
 import firebase from 'firebase/app'
-import * as calc from '@/calc/index'
-import { TYPE_CHART, Type } from '@/calc/data/types'
+import { TypeName } from '@smogon/calc/dist/data/interface'
+import * as calc from '@smogon/calc'
 import 'firebase/firestore'
 import { PokemonManagementData, PokemonData } from '~/interface/pokemon'
 
@@ -26,12 +26,11 @@ export const pokemonDataFromNameOrManagemendId = async ({
       evs: data.evs,
       moves: data.moves
     })
-    const types = typesFromClacPokemon(calcPokemon)
     return {
       name: changePokemonNameToOtherLang(data.name),
       calcPokemon,
-      types,
-      typeAisho: weekTypeFromCalcPokemon(types),
+      types: calcPokemon.types,
+      typeAisho: weekTypeFromCalcPokemon(calcPokemon.types),
       imageUrl: `https://storage.cloud.google.com/pokebattletool.appspot.com/pokemon/icon/${data.name}.png`,
       isManagement: true,
       managementId
@@ -42,25 +41,18 @@ export const pokemonDataFromNameOrManagemendId = async ({
 
 export const pokemonDataFromName = (name: string): PokemonData => {
   const calcPokemon = new calc.Pokemon(8, name!, { level: 50 })
-  const types = typesFromClacPokemon(calcPokemon)
   return {
     name: changePokemonNameToOtherLang(name!),
     calcPokemon,
-    types,
-    typeAisho: weekTypeFromCalcPokemon(types),
+    types: calcPokemon.types,
+    typeAisho: weekTypeFromCalcPokemon(calcPokemon.types),
     imageUrl: `https://storage.googleapis.com/pokebattletool.appspot.com/pokemon/icon/${name}.png`,
     isManagement: false
   }
 }
 
-const typesFromClacPokemon = (calcPokemon: calc.Pokemon): Type[] => {
-  const types: Type[] = [calcPokemon.type1]
-  if (calcPokemon.type2) types.push(calcPokemon.type2)
-  return types
-}
-
-const typeList: Type[] = [
-  'None',
+const typeList: TypeName[] = [
+  '???',
   'Normal',
   'Grass',
   'Fire',
@@ -80,16 +72,18 @@ const typeList: Type[] = [
   'Steel',
   'Fairy'
 ]
-type Types = { [type in Type]?: number }
-const weekTypeFromCalcPokemon = (types: Type[]): any => {
-  const typeChart = TYPE_CHART[8]
-  const typeAishoTmp: Types = {}
+// type Types = { [type in Type]?: number }
+const weekTypeFromCalcPokemon = (
+  types: [TypeName] | [TypeName, TypeName]
+): any => {
+  const typeChart = calc.TYPE_CHART[8]
+  const typeAishoTmp: { [typeName: string]: number } = {}
   for (const myType of types) {
     for (const type of typeList) {
       if (typeAishoTmp[type]) {
         typeAishoTmp[type] = typeAishoTmp[type]! * typeChart[type]![myType]!
       } else {
-        typeAishoTmp[type] = typeChart[type]![myType]
+        typeAishoTmp[type] = typeChart[type]![myType]!
       }
     }
   }

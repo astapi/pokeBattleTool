@@ -1633,6 +1633,13 @@
   dependencies:
     any-observable "^0.3.0"
 
+"@smogon/calc@^0.4.2":
+  version "0.4.2"
+  resolved "https://registry.yarnpkg.com/@smogon/calc/-/calc-0.4.2.tgz#1b59b07d4be92f4b2dfd0cd42088e3772a193e69"
+  integrity sha512-/9cfvuqIOXdufoRTEBXPl4IIY8LkE09Q5l2tj1Zxhh7k4oKYE91vnpWhgPAnYtps39Tb2X1OLTT1PuBN/gsPlw==
+  dependencies:
+    "@types/node" "^14.0.13"
+
 "@types/anymatch@*":
   version "1.3.1"
   resolved "https://registry.yarnpkg.com/@types/anymatch/-/anymatch-1.3.1.tgz#336badc1beecb9dacc38bea2cf32adf627a8421a"
@@ -1877,6 +1884,11 @@
   version "12.12.22"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-12.12.22.tgz#b8d9eae3328b96910a373cf06ac8d3c5abe9c200"
   integrity sha512-r5i93jqbPWGXYXxianGATOxTelkp6ih/U0WVnvaqAvTqM+0U6J3kw6Xk6uq/dWNRkEVw/0SLcO5ORXbVNz4FMQ==
+
+"@types/node@^14.0.13":
+  version "14.0.14"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-14.0.14.tgz#24a0b5959f16ac141aeb0c5b3cd7a15b7c64cbce"
+  integrity sha512-syUgf67ZQpaJj01/tRTknkMNoBBLWJOBODF0Zm4NrXmiSuxjymFrxnTu1QVYRubhVkRcZLYZG8STTwJRdVm/WQ==
 
 "@types/normalize-package-data@^2.4.0":
   version "2.4.0"

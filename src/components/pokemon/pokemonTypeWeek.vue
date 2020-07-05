@@ -11,9 +11,9 @@
 
 <script lang="ts">
 import { Component, Vue, Prop } from 'nuxt-property-decorator'
+import { TypeName } from '@smogon/calc/dist/data/interface'
 import { TYPE_LIST } from '@/interface/pokemonType'
 import PokemonType from '@/components/pokemon/pokemonType.vue'
-import { Type } from '@/calc/data/types'
 
 @Component({
   components: {
@@ -22,7 +22,7 @@ import { Type } from '@/calc/data/types'
 })
 export default class PokemonTypeWeek extends Vue {
   @Prop() readonly weekMagnification!: string
-  @Prop() readonly typeNameList!: Type[]
+  @Prop() readonly typeNameList!: TypeName[]
 
   get typeList() {
     return TYPE_LIST

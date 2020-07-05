@@ -1,5 +1,5 @@
 <template>
-  <div class="container relative">
+  <div class="container mx-auto relative">
     <section class="absolute" style="top: 10px; right: 10px;" @click="showHelp">
       <span><i class="far fa-question-circle text-2xl"></i></span>
     </section>
@@ -151,7 +151,7 @@ export default class BattleEntry extends Vue {
     // const ret: SpeedData[] = []
     const a: any = {}
     for (const pokemon of this.allBattlePokemon) {
-      const baseStatsSpeed = pokemon.calcPokemon.species.bs.sp
+      const baseStatsSpeed = pokemon.calcPokemon.species.baseStats.spe
       if (a[baseStatsSpeed]) {
         const index = a[baseStatsSpeed].findIndex(
           (p: PokemonData) => p.name === pokemon.name

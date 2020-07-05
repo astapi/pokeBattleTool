@@ -23,14 +23,14 @@
       </section>
 
       <div class="flex justify-around mt-5 lg:mt-0 lg:hidden">
-        <button @click="saveBattle('win')" class="able-button">勝ち</button>
-        <button @click="saveBattle('lose')" class="able-button">負け</button>
+        <button class="able-button" @click="saveBattle('win')">勝ち</button>
+        <button class="able-button" @click="saveBattle('lose')">負け</button>
       </div>
 
       <div class="hidden lg:block" style="width: 16%;">
         <div class="flex justify-around">
-          <button @click="saveBattle('win')" class="able-button">勝ち</button>
-          <button @click="saveBattle('lose')" class="able-button">負け</button>
+          <button class="able-button" @click="saveBattle('win')">勝ち</button>
+          <button class="able-button" @click="saveBattle('lose')">負け</button>
         </div>
         <div
           v-if="battolePokemonSpeedList.length > 0"
@@ -84,8 +84,8 @@
           <div
             v-for="pokemon of enemyParty"
             :key="pokemon.name"
-            @click="selectEnemy(pokemon)"
             class="flex flex-wrap"
+            @click="selectEnemy(pokemon)"
           >
             <PokemonImageAndName
               :image-url="pokemon.imageUrl"
@@ -137,7 +137,7 @@ export default class BattleIndex extends Vue {
     // const ret: SpeedData[] = []
     const a: any = {}
     for (const pokemon of this.allBattlePokemon) {
-      const baseStatsSpeed = pokemon.calcPokemon.species.bs.sp
+      const baseStatsSpeed = pokemon.calcPokemon.species.baseStats.spe
       if (a[baseStatsSpeed]) {
         const index = a[baseStatsSpeed].findIndex(
           (p: PokemonData) => p.name === pokemon.name

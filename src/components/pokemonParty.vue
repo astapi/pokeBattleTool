@@ -6,7 +6,10 @@
       class="w-2/4"
       @click="select(pokemon)"
     >
-      <Pokemon :id="`pokemon-${pokemon.name}`" :pokemon="pokemon" />
+      <Pokemon
+        :class="selectPokemonNameList.includes(pokemon.name) ? 'selected' : ''"
+        :pokemon="pokemon"
+      />
     </div>
   </div>
 </template>
@@ -23,14 +26,20 @@ import Pokemon from '@/components/pokemon/pokemon.vue'
 })
 export default class PokemonParty extends Vue {
   @Prop() readonly partyData!: PokemonData[]
+  selectPokemonNameList: string[] = []
+  maxSelect: number = 6
 
   select(pokemon: PokemonData) {
-    if (process.client) {
-      const dom = document.querySelector(`#pokemon-${pokemon.name}`)
-      if (!dom) return
-      dom.classList.toggle('selected')
-      this.$emit('select', pokemon)
+    this.$emit('select', pokemon)
+    const index = this.selectPokemonNameList.findIndex(
+      (name) => pokemon.name === name
+    )
+    if (index === -1) {
+      if (this.selectPokemonNameList.length === this.maxSelect) return
+      this.selectPokemonNameList.push(pokemon.name)
+      return
     }
+    this.selectPokemonNameList.splice(index, 1)
   }
 }
 </script>
