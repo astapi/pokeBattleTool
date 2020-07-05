@@ -1,5 +1,5 @@
 <template>
-  <div class="container relative">
+  <div class="container mx-auto relative">
     <section class="absolute" style="top: 10px; right: 10px;" @click="showHelp">
       <span><i class="far fa-question-circle text-2xl"></i></span>
     </section>

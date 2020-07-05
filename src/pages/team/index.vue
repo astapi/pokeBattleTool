@@ -1,5 +1,5 @@
 <template>
-  <div class="container relative">
+  <div class="container mx-auto relative">
     <section class="absolute" style="top: 15px; right: 15px">
       <nuxt-link to="/team/edit" class="able-button">
         チーム登録
